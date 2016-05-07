@@ -41,15 +41,19 @@
     width:100%;
     height:100%;
 }
-.vehicle_top .vehicle_home a span {
+#dianji_CityList {
+    width:60px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
     color:#FFF;
-    display:inline;
 }
 .vehicle_top .vehicle_home a span img {
     width:20px;
     height:20px;
     position:relative;
-    top:5px;
+    top:-84px;
+    
 }
 
 body {

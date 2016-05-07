@@ -114,8 +114,9 @@ function resultList(jsonResult) {
     if(result.length == 0){
             $('.overlayX').css('display','none');
             flag=true;//判断返回结果
+           
             if ($('#NoData').length <= 0) {
-               $('.'+cls).append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
+                $('body').append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
             }
             setTimeout(function(){
               $('#NoData').remove();
@@ -244,7 +245,7 @@ function fuwu() {
 		</div>
         <div class="vehicle_home">
             <a href="javascript:void(0);">
-                <span id="dianji_CityList">城市</span>
+                <div id="dianji_CityList">城市</div>
                 <span> <img src="city_qry.png"/> </span>
             </a>
         </div>
@@ -355,8 +356,10 @@ function fuwu() {
                 function queding(){
                 if($('input[id="cityChoice"]').val()!=''){
                  $('.overlayCity').css('display','none');
+                
                  $("#dianji_CityList").text($('input[id="cityChoice"]').val());
                  $('.div_overflow').remove();
+                 $('input[id="cityChoice"]').blur();
                  ROWNUMBER="0";
                  getGoods2(ROWNUMBER);
                 }else{
