@@ -778,39 +778,35 @@ X.snail=function(){
     //$('.snail').animate({"margin-left":"80%"},15000);
 }
 X.city={
-blur:function(id,callback){
-        if(/[\u4e00-\u9fa5]/g.test($('#city_name').val())){
-            if(1 != citynames[$('#city_name').val()]) return;
-            $('#'+id).text($('#city_name').val());
-            if(typeof callback == 'function') callback();
-        }
-        $('.overlayCity').css('display','none');
-    },
-keyup:function(){
-        var v = $('#city_name').val();
-    //$('#hide_city_name').val(v.replace(/[ ]/ig,'') + ',' + v.indexOf('\''));
-        $('#citys ul').empty();
-        var t;
-        if(/[\u4e00-\u9fa5]/g.test(v)){
-            t = new RegExp('^'+v+'.*','i');
-        }else{
-            t = new RegExp('.*?\\W'+v+'.*','i');
-        }
-        if(v != ''){
-            var j = 0;
-            for(var i=0;i<cities.length;i++){
-                if(t.test(cities[i].match)){
-                    $('#citys ul').append('<li class="'+(j%2 == 0?'ac_even':'ac_odd')+'">'+cities[i].name+'</li>');
-                    j++;
-                }
-            }
-        }
-    },
-showCitySelection:function(id){
+//blur:function(id,callback){
+//        if(/[\u4e00-\u9fa5]/g.test($('#city_name').val())){
+//            if(1 != citynames[$('#city_name').val()]) return;
+//            $('#'+id).text($('#city_name').val());
+//            if(typeof callback == 'function') callback();
+//        }
+//        $('.overlayCity').css('display','none');
+//    },
+//keyup:function(){
+//        var v = $('#city_name').val();
+//    //$('#hide_city_name').val(v.replace(/[ ]/ig,'') + ',' + v.indexOf('\''));
+//        $('#citys ul').empty();
+//        var t;
+//        if(/[\u4e00-\u9fa5]/g.test(v)){
+//            t = new RegExp('^'+v+'.*','i');
+//        }else{
+//            t = new RegExp('.*?\\W'+v+'.*','i');
+//        }
+//        if(v != ''){
+//            var j = 0;
+//            for(var i=0;i<cities.length;i++){
+//                if(t.test(cities[i].match)){
+//                    $('#citys ul').append('<li class="'+(j%2 == 0?'ac_even':'ac_odd')+'">'+cities[i].name+'</li>');
+//                    j++;
+//                }
+//            }
+//        }
+//    },
+showCitySelection:function(){
         $('.overlayCity').css('display','block');
-        $('#city_name').val('');
-        $('#citys ul').empty();
-        $('#city_name').focus();
-        city_id = id;
     }
 }
