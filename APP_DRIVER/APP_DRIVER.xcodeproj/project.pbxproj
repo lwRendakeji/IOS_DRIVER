@@ -555,14 +555,9 @@
 		52F67AF21C3A16A00032EFDF /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		52F67AF41C3A16AA0032EFDF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		52F67AF61C3A16B40032EFDF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		52F67AF81C3A16E60032EFDF /* libBaiduMobStatForSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStatForSDK.a; path = ../BaiduNavi_iOSSDK_v2.0.5_Lib/BaiduStatistics/libBaiduMobStatForSDK.a; sourceTree = "<group>"; };
-		52F67AFA1C3A16F50032EFDF /* libbaiduNaviSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbaiduNaviSDK.a; path = ../BaiduNavi_iOSSDK_v2.0.5_Lib/libbaiduNaviSDK.a; sourceTree = "<group>"; };
 		52F67AFC1C3A17030032EFDF /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		52F67AFE1C3A183B0032EFDF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		52F67B001C3A18500032EFDF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		52F67B021C3A1AE70032EFDF /* baiduNaviSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = baiduNaviSDK.bundle; path = ../BaiduNavi_iOSSDK_v2.0.5_Lib/baiduNaviSDK.bundle; sourceTree = "<group>"; };
-		52F67B151C3A41DE0032EFDF /* libBaiduMobStatForSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStatForSDK.a; path = APP_DRIVER/BaiduStatistics/libBaiduMobStatForSDK.a; sourceTree = "<group>"; };
-		52F67B161C3A41DE0032EFDF /* libbaiduNaviSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbaiduNaviSDK.a; path = APP_DRIVER/BaiduStatistics/libbaiduNaviSDK.a; sourceTree = "<group>"; };
 		52F67B1D1C3A556C0032EFDF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		52FE95F01C30C7FD00E84235 /* tel_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tel_1.png; path = "WEB-INF/tel_1.png"; sourceTree = "<group>"; };
 		8E6EC63D1C3273CB0045A0C2 /* start_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = start_4.png; path = "WEB-INF/start_4.png"; sourceTree = "<group>"; };
@@ -618,14 +613,9 @@
 			isa = PBXGroup;
 			children = (
 				52F67B1D1C3A556C0032EFDF /* MapKit.framework */,
-				52F67B151C3A41DE0032EFDF /* libBaiduMobStatForSDK.a */,
-				52F67B161C3A41DE0032EFDF /* libbaiduNaviSDK.a */,
-				52F67B021C3A1AE70032EFDF /* baiduNaviSDK.bundle */,
 				52F67B001C3A18500032EFDF /* ImageIO.framework */,
 				52F67AFE1C3A183B0032EFDF /* CoreMotion.framework */,
 				52F67AFC1C3A17030032EFDF /* CoreTelephony.framework */,
-				52F67AFA1C3A16F50032EFDF /* libbaiduNaviSDK.a */,
-				52F67AF81C3A16E60032EFDF /* libBaiduMobStatForSDK.a */,
 				52F67AF61C3A16B40032EFDF /* AVFoundation.framework */,
 				52F67AF41C3A16AA0032EFDF /* SystemConfiguration.framework */,
 				52F67AF21C3A16A00032EFDF /* libstdc++.6.0.9.tbd */,

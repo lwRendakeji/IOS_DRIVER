@@ -168,33 +168,38 @@
     //[webView loadRequest:request];
     
     //定位代码
+    [self getLocation];
+}
+
+-(void) getLocation{
     //判断定位操作是否被允许
-     if ([CLLocationManager locationServicesEnabled]) {
-         //开始定位用户的位置
-//         [self.locationManager startUpdatingLocation];
-           [self.locationManager startMonitoringSignificantLocationChanges];
-         //每隔多少米定位一次（这里的设置为任何的移动）
-         self.locationManager.distanceFilter=kCLDistanceFilterNone;
-         //设置定位的精准度，一般精准度越高，越耗电（这里设置为精准度最高的，适用于导航应用）
-         self.locationManager.desiredAccuracy=kCLLocationAccuracyBestForNavigation;
-     }
+    if ([CLLocationManager locationServicesEnabled]) {
+        //开始定位用户的位置
+        //         [self.locationManager startUpdatingLocation];
+        [self.locationManager startMonitoringSignificantLocationChanges];
+        //每隔多少米定位一次（这里的设置为任何的移动）
+        //self.locationManager.distanceFilter=kCLDistanceFilterNone;
+        //设置定位的精准度，一般精准度越高，越耗电（这里设置为精准度最高的，适用于导航应用）
+        self.locationManager.desiredAccuracy=kCLLocationAccuracyBestForNavigation;
+        self.locationManager.pausesLocationUpdatesAutomatically = NO;   //该模式是抵抗程序在后台被杀，申明不能够被暂停
+    }
     
     
-//    if([CLLocationManager locationServicesEnabled]){
-//        NSLog(@"使用系统定位");
-//        _locationManager = [[CLLocationManager alloc] init];
-//        _locationManager.delegate = self;//代理
-////        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//定位精确度
-////        _locationManager.distanceFilter = 1.0f;//每隔1000米 更新一次信息
-//        //[_locationManager startUpdatingLocation];//标准定位
-//        _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
-//        _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
-//        [_locationManager startMonitoringSignificantLocationChanges];//基站定位
-//    }else{
-//        //提示用户无法进行定位操作
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认开启定位功能" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        [alertView show];
-//    }
+    //    if([CLLocationManager locationServicesEnabled]){
+    //        NSLog(@"使用系统定位");
+    //        _locationManager = [[CLLocationManager alloc] init];
+    //        _locationManager.delegate = self;//代理
+    ////        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//定位精确度
+    ////        _locationManager.distanceFilter = 1.0f;//每隔1000米 更新一次信息
+    //        //[_locationManager startUpdatingLocation];//标准定位
+    //        _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
+    //        _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
+    //        [_locationManager startMonitoringSignificantLocationChanges];//基站定位
+    //    }else{
+    //        //提示用户无法进行定位操作
+    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认开启定位功能" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    //        [alertView show];
+    //    }
 }
 
 //页面不上划
