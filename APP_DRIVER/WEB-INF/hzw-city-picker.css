@@ -2,6 +2,7 @@ body{
 	margin:0 auto;
 }
 #search {
+    z-index:9999;
 	border-bottom-width: thin;
 	border-bottom-style: solid;
 	border-bottom-color: #09C;

@@ -319,7 +319,7 @@ function fuwu() {
 		</table>
 
 	</div>
-	<div class="overlayCity">
+	<div class="overlayCity" onClick="dd();">
         
         <div id="search">
             <input type="text" id="cityChoice" placeholder="点击获取城市">
@@ -368,7 +368,12 @@ function fuwu() {
                 
                 }
                 
-         
+                //遮盖层点击事件
+                function dd(){
+                    $('.overlayCity').css('display','none');
+                    $('input[id="cityChoice"]').blur();
+                
+                }
                 
                 </script>
                 

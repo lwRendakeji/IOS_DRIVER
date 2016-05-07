@@ -601,6 +601,7 @@ putDataIntoDiv:function(){
     for(var i=0;i<arguments.length && i<4;i++){
         switch(typeof arguments[i]){
             case 'object':
+                //arguments  js自带的参数列表 保存的变量 ［］数组类型
                 if((arguments[i] instanceof Array) || !X.isEmpty(arguments[i].success)) result = arguments[i];
                 else funcObj = arguments[i];
                 break;
@@ -613,6 +614,7 @@ putDataIntoDiv:function(){
         }
     }
     if(X.isEmpty(cls)) cls = 'detailBody';
+    //添加 数据装载
     if($('.'+cls).length <= 0){
 		$('body').append('<div class="'+cls+'"></div>');
 	}
@@ -623,6 +625,7 @@ putDataIntoDiv:function(){
         $('.overlayX').css('display','none');
         return false;
     }
+    //用于清空数据(div中的数据)
     if(X.isEmpty(emptyFlag)){
         $('.'+cls).empty();
     }
@@ -673,6 +676,7 @@ putDataIntoDiv:function(){
                 }
 			});
 		}
+        //添加 点击事件
         if(X.getObjLenOrCompare(funcObj,0)){
             for(var x in funcObj){
                 $(x).click(funcObj[x]);
@@ -808,5 +812,6 @@ X.city={
 //    },
 showCitySelection:function(){
         $('.overlayCity').css('display','block');
+        $('input[id="cityChoice"]').focus();
     }
 }

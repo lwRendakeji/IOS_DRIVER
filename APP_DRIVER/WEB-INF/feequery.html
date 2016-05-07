@@ -11,53 +11,62 @@
 <link rel="stylesheet" type="text/css" href="X.css"/>
 <script type="text/javascript">
     var result,index,clickflag = true;
-    $(function(){
-      var data = {};
-      data.USER_ID = X.cookie.get('username');
-      data.ROLE_ID = X.cookie.get('role_id');
-      data.PAY_STS = '10';
-      X.html.setOverlay();
-      X.soap(data,'FeeQueryService','getFeeQuery','unpayedResult');
-      });
-    function unpayedResult(jsonResult){
+$(function(){
+  var data = {};
+  data.USER_ID = X.cookie.get('username');
+  data.ROLE_ID = X.cookie.get('role_id');
+  data.PAY_STS = '10';
+  X.html.setOverlay();
+  X.soap(data,'FeeQueryService','getFeeQuery','unpayedResult');
+});
+
+function unpayedResult(jsonResult){
+//未付款查询
         result = jsonResult.result;
-        if(!X.html.putDataIntoDiv(result,{'input[name="score"]':function(e){
-                                  index = $(this).parent().parent().index();
-                                  clickflag = false;
-                                  if(X.isEmpty(result[index].SCORE1)){
-                                  X.dialog('请先在[我要评价]中对办事处服务进行评价');
-                                  return;
-                                  }
-                                  var data = {};
-                                  data.TRS_ID = result[index].TRS_ID;
-                                  data.TRANS_GROUP_ID = result[index].TRANS_GROUP_ID;
-                                  data.MESSAGE = '回单结算评价:';
-                                  data.SCOREINDEX = '3';
-                                  window.location.href = X.html.setInputs(data,'Fee_Score.html');
-                                  },'input[name="pre_pay"]':function(){
-                                  index = $(this).parent().parent().index();
-                                  var data = {};
-                                  data.APP_ID = X.cookie.get('username');
-                                  X.soap(data,'UserService','getUsableIntegral','chkPrePayResult');
-                                  clickflag = false;
-                                  },'.divTable':function(){
-                                  if(clickflag){
-                                  if(parseFloat(result[$(this).index()].KOUKUAN_FEE)>0){
-                                  window.location.href = 'FeeQuery_in.html?inputs&TRS_ID='+result[$(this).index()].TRS_ID
-                                  +'&VEHICLE_ID='+result[$(this).index()].CONVEYANCE_ID+'&TRANS_GROUP_ID='+result[$(this).index()].TRANS_GROUP_ID;
-                                  }
-                                  }else{
-                                  clickflag = true;
-                                  }
-                                  }})) return;
+        if(!X.html.putDataIntoDiv(result,{
+            'input[name="score"]':function(e){
+                  index = $(this).parent().parent().index();
+                  clickflag = false;
+                                          
+                  if(X.isEmpty(result[index].SCORE1)){
+                    X.dialog('请先在[我要评价]中对办事处服务进行评价');
+                    return;
+                  }
+                  var data = {};
+                  data.TRS_ID = result[index].TRS_ID;
+                  data.TRANS_GROUP_ID = result[index].TRANS_GROUP_ID;
+                  data.MESSAGE = '回单结算评价:';
+                  data.SCOREINDEX = '3';
+                  window.location.href = X.html.setInputs(data,'Fee_Score.html');
+            }
+           ,'input[name="pre_pay"]':function(){
+              index = $(this).parent().parent().index();
+              var data = {};
+              data.APP_ID = X.cookie.get('username');
+              X.soap(data,'UserService','getUsableIntegral','chkPrePayResult');
+              clickflag = false;
+              },'.divTable':function(){
+                if(clickflag){
+                    if(parseFloat(result[$(this).index()].KOUKUAN_FEE)>0){
+                      window.location.href = 'FeeQuery_in.html?inputs&TRS_ID='+result[$(this).index()].TRS_ID
+                      +'&VEHICLE_ID='+result[$(this).index()].CONVEYANCE_ID+'&TRANS_GROUP_ID='+result[$(this).index()].TRANS_GROUP_ID;
+                    }
+                 }else{
+                    clickflag = true;
+                 }
+             }
+        }
+    ))//到这都是 未付款 第一个判断条件
+        return;//判断为 非真 就结束了.....
                                   
-        $('.divTable').each(function(){
-                            index = $(this).index();
-                            if(!X.isEmpty(result[index].SCORE3)){
-                            $(this).find('input[name="score"]').css('visibility','hidden');
-                            }
-                            });
+ $('.divTable').each(function(){
+    index = $(this).index();
+    if(!X.isEmpty(result[index].SCORE3)){
+      $(this).find('input[name="score"]').css('visibility','hidden');
     }
+  });
+}//unpayedResult 方法结束
+
     function chkPrePayResult(jsonResult){
         if(X.html.connError(jsonResult)) return;
         if('00' == jsonResult.result[0].RESULT){
