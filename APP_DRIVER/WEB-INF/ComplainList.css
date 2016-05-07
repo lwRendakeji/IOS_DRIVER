@@ -1,0 +1,95 @@
+@charset "utf-8";
+/* CSS Document */
+
+.vehicle_top {
+    background-image: url(task.png);
+    font-size: 24px;
+    color: #FFF;
+    height: 64px;
+    line-height:84px;
+    width: 100%;
+    text-align: center;
+    position:fixed;
+    top:0px;
+    z-index:3;
+}
+.vehicle_top div{
+    width:50%;
+    margin:0 auto;
+}
+.div_duan {
+    margin-top:70px;
+}
+.div_duan {
+	margin-top:64px;
+}
+.vehicle_top .vehicle_back {
+	float: left;
+	height: 30px;
+	width: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.vehicle_top .vehicle_home {
+	float: right;
+	margin-right: 10px;
+	height: 20px;
+	width: 30px;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+    background-color: #FFF;
+}
+
+.Complain_zj {
+    width:100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+    border-bottom:1px solid #CCC;
+}
+.Complain_zj tr:first-child td {
+	text-align: left;
+	color: #FFF;
+}
+.Complain_zj tr:first-child td span {
+	color:#CCC;
+}
+.Complain_zj tr:last-child td:first-child {
+	height: 20px;
+	width: 20px;
+}
+
+.Complain_zj tr td img {
+    height: 20px;
+    width: 20px;
+}
+.Complain_kefu tr td img {
+    height: 20px;
+    width: 20px;
+}
+
+
+
+.Complain_kefu {
+    width:100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-bottom:1px solid #CCC;
+}
+.Complain_kefu tr:first-child td {
+	text-align: right;
+	color: #FFF;
+}
+.Complain_kefu tr:first-child td span {
+    color:#CCC;
+}
+.Complain_kefu tr:last-child td:first-child {
+	text-align:right;
+}
+.Complain_kefu tr:last-child td:last-child {
+	height: 30px;
+	width: 30px;
+}
+

@@ -1,0 +1,123 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #BBB;
+	height: 100%;
+	width: 100%;
+}
+.vehicle_top {
+    background-image: url(task.png);
+    font-size: 24px;
+    color: #FFF;
+    height: 64px;
+    line-height:84px;
+    width: 100%;
+    text-align: center;
+    position:fixed;
+    top:0px;
+    z-index:3;
+}
+.vehicle_top div{
+    width:50%;
+    margin:0 auto;
+}
+.div_duan {
+    margin-top:70px;
+}
+
+.vehicle_top .vehicle_back {
+	float: left;
+	height: 30px;
+	width: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.vehicle_top .vehicle_home {
+	float: right;
+	margin-right: 10px;
+	height: 30px;
+	width: 30px;
+}
+
+
+
+.divTable {
+	height: auto;
+	width: 98%;
+	margin-right: auto;
+	margin-left: auto;
+	border: 1px solid #000;
+	margin-top: 5px;
+	background-color: #DDD;
+	padding-top: 5px;
+}
+.divTable .divTable_tr1 {
+	width: 98%;
+	margin-right: auto;
+	margin-left: auto;
+	height: 100%;
+	overflow-x: auto;
+	color: #AAA;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #555;
+}
+.divTable .divTable_tr2 {
+	width: 98%;
+	margin-right: auto;
+	margin-left: auto;
+	overflow-x: auto;
+}
+
+
+.divTable .divTable_tr1 .divTable_tr1_1 {
+	float: left;
+	height: 100%;
+	width: 74%;
+	color: #000;
+}
+.divTable .divTable_tr1 .divTable_tr1_2 {
+	float: right;
+	height: 100%;
+	width: 26%;
+	color: #000;
+}
+.divTable .divTable_tr1 .divTable_tr1_4 {
+	float: left;
+	width: 20%;
+	height: 100%;
+	text-align: left;
+	color: #CCC;
+	display: inline;
+}
+.divTable .divTable_tr1 .divTable_tr1_5 {
+	float: left;
+	width: 30%;
+	height: 100%;
+	text-align: left;
+	display: inline;
+}
+
+
+.divTable .divTable_tr2 .divTable_tr2_1 {
+	width: 40%;
+	float: left;
+	text-align: center;
+	color: #AAA;
+	display: inline;
+}
+
+
+.divTable .divTable_tr2 .divTable_tr2_2 {
+	width: 50%;
+	float: left;
+	text-align: center;
+	display: inline;
+	width: 40%;
+	float: left;
+	border-left: 1px solid #555555;
+
+}

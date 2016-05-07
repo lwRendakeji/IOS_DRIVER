@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+
+<link href="ComplainList.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="X.js"></script>
+<script>
+$(function(){
+    X.html.setOverlay();
+	X.soap(X.html.getInputs(), 'ComplainService', 'getComplain');
+});
+function resultList(jsonResult){
+    if(X.html.connError(jsonResult)) return;
+    $('table').remove();
+    if(jsonResult.result.length > 0){
+        var cls = '',t = '';
+        for(var i =0;i<jsonResult.result.length;i++){
+            if(!X.getObjLenOrCompare(jsonResult.result[i],0)) continue;
+            if(jsonResult.result[i].FLAG == 'FROM') {cls = 'Complain_zj';t = '<tr><td><img src="ask.png"</td><td>'+jsonResult.result[i].COMPLAIN_CONTENT+'</td></tr>';}
+            else {cls = 'Complain_kefu';t = '<tr><td>'+jsonResult.result[i].COMPLAIN_CONTENT+'</td><td><img src="answer.png"</td></tr>'}
+            $('body').append('<table class="'+cls+'"><tr><td colspan="2"><span>'+jsonResult.result[i].ADDTIME+'</span></td></tr>'+t+'</table>');
+        }
+    }else{
+        $('table').append('<tr><td colspan="2">未找到任何数据</td></tr>');
+    }
+}
+</script>
+<style>
+    .overlayX{z-index:8000;position:fixed;top:0px;left:0px;width:100%;height:2000px;background-color:rgba(204,204,204,0.7);display:none;}
+    .overlayX > div{position:absolute;width:90%;margin-left:5%;margin-top:35%;background-color:#FFFFFF;height:60px;line-height:60px;}
+    .overlayX span{vertical-align:middle;margin-left:10px;overflow:auto;}
+    .overlayX img{margin-left:10px;vertical-align:middle;width:50px;height:50px;line-height:60px;}
+</style>
+</head>
+
+<body>
+<div class="vehicle_top">
+  <div class="vehicle_back"><a href="complain.html" ><img src="arrow.png" width="30" height="30" longdesc="arrow.png"></a></div>
+  <div class="vehicle_home"><a href="main.html"><img src="tab_weixin_normal.png" width="30" height="25"></a></div>
+  <div>投诉建议</div>
+</div>
+     <!-- 空块-->  
+  <div class="div_duan"></div> 
+
+
+</body>
+</html>

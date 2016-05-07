@@ -1,0 +1,201 @@
+@charset "utf-8";
+/* CSS Document */
+
+.vehicle_top {
+    background-image: url(task.png);
+     font-size: 24px;
+    color: #FFF;
+    height: 64px;
+    line-height:84px;
+    width: 100%;
+    text-align: center;
+}
+.vehicle_top div{
+    width:50%;
+    margin:0 auto;
+}
+.div_duan {
+    margin-top:70px;
+}
+
+.vehicle_top .vehicle_back {
+	float: left;
+	height: 30px;
+	width: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.vehicle_top .vehicle_home {
+	float: right;
+	margin-right: 10px;
+	height: 30px;
+	width: 30px;
+	margin-top: 5px;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+    height:100%;
+    width:100%;
+	background-color: #DDD;
+}
+
+
+
+.DivTableB table tr {
+	margin-top: 10px;
+}
+.divTable {
+	background-color: #018CC7;
+	height: auto;
+	width: 100%;
+	padding-top: 20px;
+}
+.divTable table tr:first-child td {
+	text-align: center;
+	color: #FFF;
+}
+.divTable table tr:nth-child(2) td:first-child { 
+	text-align:right;
+	color:#FFF; 
+	width:40%;
+	border-bottom-style:solid;
+	border-bottom-color:#FFF;
+	border-bottom-width:1px;
+	
+	}
+.divTable table tr:nth-child(2) td:nth-child(2) { 
+	text-align:left;
+	color:#FFF;
+	width:10%;
+	background-image:url(grade.png);
+	background-size:20px 20px;
+	-webkit-background-size:20px auto;
+	background-repeat:no-repeat;
+	border-bottom-style:solid;
+	border-bottom-color:#FFF;
+	border-bottom-width:1px;
+	}
+.divTable table tr:nth-child(2) td:nth-child(3) { 
+	text-align:right;
+	color:#FFF; 
+	width:15%;
+	border-bottom-style:solid;
+	border-bottom-color:#FFF;
+	border-bottom-width:1px;
+	}
+.divTable table tr:nth-child(2) td:nth-child(4) { 
+	text-align:left;
+	color:#FFF;
+	width:35%;
+	border-bottom-style:solid;
+	border-bottom-color:#FFF;
+	border-bottom-width:1px;
+	}
+	
+	
+.main_service_bottom {
+    float: left;
+    width: 100%;
+    padding-top: 5px;
+    background-image: url(task.png);
+    position:fixed;
+    z-index:3;
+    bottom: 0px;
+}
+
+.main_service_bottom table tr:first-child td{
+	text-align: center;
+	height: 25px;
+	color: #FFF;
+	vertical-align: text-bottom;
+}
+.main_service_bottom table tr:last-child td{
+	text-align: center;
+	height: 12px;
+	color: #FFF;
+	font-size: 12px;
+}
+.main_service_bottom table tr td span {
+	font-size: 12px;
+	color: #FFF;
+}
+.divTable div .jifen {
+	float: left;
+	height: 20px;
+	width: 49.8%;
+	text-align: center;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #FFF;
+	color: #FFF;
+	background-image: url(task.png);
+}
+.divTable div .jifen_a {
+	float:right;
+	height: 20px;
+	width: 49.8%;
+	text-align: center;
+	color: #FFF;
+	background-image: url(task.png);
+}
+.conter {
+	background-color: #FFF;
+	height: 30px;
+	width: 100%;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: left;
+	vertical-align: middle;
+	line-height: 30px;
+}
+.conter img:first-child {
+	float: left;
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.conter img:last-child {
+	float: right;
+	margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+#gengduoxinxi {
+	top:64px;
+	right:5px;
+	position:absolute;
+	z-index:3;
+	background-color: #FFF;
+	height: auto;
+	width: 120px;
+	display: none;
+}
+#gengduoxinxi div {
+	font-size: 18px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #AAA;
+	height: 30px;
+	width: 100%;
+	text-align: left;
+	padding-left: 5px;
+	vertical-align: middle;
+	line-height: 30px;
+}
+#gengduoxinxi div div:first-child {
+	float: left;
+	height: 30px;
+	width: 30px;
+	margin-right: 5px;
+}
+a {
+	text-decoration: none;
+}

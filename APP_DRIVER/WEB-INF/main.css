@@ -1,0 +1,242 @@
+@charset "utf-8";
+/* CSS Document */
+
+.vehicle_top {
+    background-image: url(task.png);
+    font-size: 24px;
+    color: #FFF;
+    height: 64px;
+    line-height:84px;
+    width: 100%;
+    text-align: center;
+    position:fixed;
+    top:0px;
+    z-index:3;
+}
+.vehicle_top div{
+    width:50%;
+    margin:0 auto;
+}
+.div_duan {
+    margin-top:64px;
+}
+.vehicle_top .vehicle_back {
+	float: right;
+	height: 20px;
+	width: 20px;
+	margin-top: 5px;
+	margin-right: 20px;
+}
+
+
+body {
+    margin: 0px;
+    padding: 0px;
+    overflow: auto;
+}
+
+.main_body .lunbo {
+    width: 100%;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: left;
+    height: 150px;
+}
+
+
+
+
+
+.main_top {
+	width:100%;
+	height:40px;
+	padding-top:5px;
+	color: #FFF;
+	text-align: center;
+	font-size: 24px;
+	background-color: #036;
+	
+}
+
+.main_service {
+    height: auto;
+	width: 100%;
+}
+.main_service .main_service_left {
+	width: 48%;
+	float: left;
+	margin-left: 1%;
+}
+.main_service .main_service_left .imgjuzhong a .main_service_left_divbored {
+	text-align: center;
+	background-color: #43d2cf;
+	width: 100%;
+	height: 70px;
+	padding-top:5px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+	
+}
+
+.main_service .main_service_left .imgjuzhong a .main_service_left_divbored_1 {
+	text-align: center;
+	background-color: #07a2b4;
+	width: 100%;
+	height: 70px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+}
+.main_service .main_service_left .imgjuzhong a .main_service_left_divbored_2 {
+	text-align: center;
+	background-color: #92d08f;
+	height: 37px;
+    width: 100%;
+    padding-top:8px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.main_service .main_service_reght {
+	width: 48%;
+	float: right;
+	margin-right: 1%;
+}
+.main_service .main_service_reght .imgjuzhong a .main_service_reght_divbored {
+	text-align: center;
+	background-color: #8d74d8;
+	width: 100%;
+	height: 70px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+}
+.main_service .main_service_reght .imgjuzhong a .main_service_reght_divbored_1 {
+	text-align: center;
+	background-color: #5ba9f7;
+	width: 100%;
+	height: 60px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+}
+.main_service .main_service_reght .imgjuzhong a .main_service_reght_divbored_2 {
+	text-align: center;
+	background-color: #f9aa4a;
+	width: 100%;
+	height: 60px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-khtml-border-radius: 10px;
+	border-radius: 10px;
+}
+
+.main_service_bottom {
+    float: left;
+    width: 100%;
+    padding-top: 5px;
+    background-image: url(task.png);
+    position:fixed;
+    z-index:3;
+    bottom: 0px;
+}
+.main_service_bottom table tr:first-child td{
+	text-align: center;
+	height: 25px;
+	color: #FFF;
+	vertical-align: text-bottom;
+}
+.main_service_bottom table tr:last-child td{
+	text-align: center;
+	height: 12px;
+	color: #FFF;
+	font-size: 12px;
+}
+.main_service_bottom table tr td span {
+	font-size: 12px;
+	color: #FFF;
+}
+
+
+
+
+.imgjuzhong {
+	width: 100%;
+	align-content: center;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.imgjuzhong a .main_service_left_img {
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 180px;
+	background-color: #888;
+}
+
+
+
+
+
+
+
+
+
+
+#content {
+	width:100%;
+}
+.main_body .lunbo #content .scroll_mid {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	height: 150px;
+}
+.main_body {
+    height: auto;
+    width: 100%;
+    overflow: hidden;
+}
+
+.main_body .lunbo #content .scroll_mid #scroll_img li {
+	list-style-type: none;
+	padding: 0px;
+	margin-left: -40px;
+	margin-top: -15px;
+	margin-bottom: 30px;
+}
+
+.main_body .lunbo #content .scroll_mid #scroll_number {
+	right:1px;
+	padding-right:5px;
+	position:absolute;
+	top:0px;
+	width: 16px;
+	height: 109px;
+}
+.main_body .lunbo #content .scroll_mid #scroll_number li {
+	width:13px;
+	height:13px;
+	text-align:center;
+    border:solid 1px #CCC;
+	margin-top:5px;
+	font-size:12px;
+	line-height:16px;
+	cursor:pointer;
+	list-style-type: none;
+}
+.main_body .lunbo #content .scroll_number_over{
+    background-color:#F96;
+    color:#FFF;
+}
+
+

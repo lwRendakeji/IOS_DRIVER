@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>无标题文档</title>
+<link href="Fee_Score.css" rel="stylesheet" type="text/css">
+<link href="X.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="jquery.mobile-1.4.5.js"></script>
+<script type="text/javascript" src="X.js"></script>
+<script>
+var score1,inputs;
+$(function(){
+	inputs = X.html.getInputs();
+	$('#trs_id').text(inputs.TRS_ID);
+	$('#trans_group_id').text(inputs.TRANS_GROUP_ID);
+  $('#message').text(inputs.MESSAGE);
+  delete inputs.MESSAGE;
+	//给每个星星定点击事件
+	$('.EvaluateScore_body_center table tr:first img').click(function(){
+		$(this).attr('src','star2.png');
+		$(this).prevAll('img').attr('src','star2.png');
+		$(this).nextAll('img').attr('src','star1.png');
+		score1 = $(this).index() + '.0';
+	});
+});
+
+function commitScore(){
+	inputs.SCORE3 = score1;
+    inputs.ROLE_ID = X.cookie.get('role_id');
+    inputs.USER_ID = X.cookie.get('username');
+    X.html.setOverlay();
+	X.soap(inputs,'ScoreService','updateScore');
+}
+function resultList(jsonResult){
+    if(X.html.connError(jsonResult)) return;
+	if('00' == jsonResult.result[0].RESULT){
+		window.location.href = "feequery.html";
+	}else{
+		X.dialog(jsonResult.result[0].MSG);
+	}
+}
+</script>
+</head>
+
+<body>
+<!--评价信头部-->
+<div class="vehicle_top">
+  <div class="vehicle_back">
+	<a href="javascript:void(0);" onclick="X.html.goBack();"><img src="arrow.png" width="30" height="30" /></a>
+  </div>
+	<div>发布评价</div>
+</div>
+<!-- 空块-->
+<div class="div_duan"></div>
+
+<!--发布评价主体-->
+<div class="EvaluateScore_body">
+  <div class="EvaluateScore_body_top">  
+   	<table width="100%" >
+      <tr>
+        <td class="EvaluateScore_table_leftTD">运单号:<label id="trs_id"></label></td>
+       
+      </tr>
+      <tr>
+        <td class="EvaluateScore_table_leftTD">合同号: <label id="trans_group_id"></label></td>
+      </tr>
+	</table>
+
+  </div>
+  <br/>
+  <!--和谐的分割线-->
+ <div class="divTable_fengexian"></div>
+ <!--和谐的分割线-->
+ 
+  <div class="EvaluateScore_body_center">
+  	<table width="100%">
+      <tr>
+        <td class="EvaluateScore_table_leftTD_b"><span id="message"></span><img src="star1.png"/><img src="star1.png"/><img src="star1.png"/><img src="star1.png"/><img src="star1.png"/></td>
+      </tr>
+	</table>
+  </div>
+  <a href="javascript:void(0)" onclick="commitScore();"><div class="EvaluateScore_bottom">
+ 	提交评价 </div></a>
+
+</div>
+
+
+
+
+</body>
+</html>

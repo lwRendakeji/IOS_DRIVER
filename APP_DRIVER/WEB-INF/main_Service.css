@@ -1,0 +1,145 @@
+@charset "utf-8";
+/* CSS Document */
+
+.vehicle_top {
+    background-image: url(task.png);
+    font-size: 24px;
+    color: #FFF;
+    height: 64px;
+    line-height:84px;
+    width: 100%;
+    text-align: center;
+    position:fixed;
+    top:0px;
+    z-index:3;
+}
+.vehicle_top div{
+    width:50%;
+    margin:0 auto;
+}
+.div_duan {
+    margin-top:70px;
+}
+
+
+
+.vehicle_top .vehicle_back {
+	float: left;
+	height: 30px;
+	width: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.vehicle_top .vehicle_home {
+    float: right;
+    height: 100%;
+    width: 100px;
+    padding-right:5px;
+    text-align:right;
+}
+
+.vehicle_top .vehicle_home a {
+    font-size: 14px;
+    text-decoration: none;
+    width:100%;
+    height:100%;
+}
+.vehicle_top .vehicle_home a span {
+    color:#FFF;
+    display:inline;
+}
+.vehicle_top .vehicle_home a span img {
+    width:20px;
+    height:20px;
+    position:relative;
+    top:5px;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	width: 100%;
+}
+.DivTable {
+	height:auto;
+	width: 100%;
+    padding-bottom:20px;
+}
+.DivTable .DivTable_tdA {
+	height: 20px;
+	width: 100%;
+	text-align: center;
+}
+.DivTable .DivTable_tdB {
+	width: 100%;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+	height: 70px;
+}
+.DivTable .DivTable_tdB div:first-child {
+	width: 40%;
+	float: left;
+	text-align: center;
+	height: 100%;
+}
+.DivTable .DivTable_tdB div:last-child {
+	float: left;
+	width: 60%;
+	height: 100%;
+}
+.DivTable .DivTable_tdC {
+	height: 50px;
+	width: 100%;
+}
+.DivTable .DivTable_tdC div:first-child {
+	width: 49%;
+	float: left;
+	text-align: center;
+	height: 100%;
+	border-right-width: 1px;
+	border-right-style: solid;
+    border-right-color: #CCC;
+}
+.DivTable .DivTable_tdC div:last-child {
+	float: left;
+	width: 50%;
+	height: 100%;
+	text-align: center;
+}
+
+.DivTableB{
+    width: 100%;
+    height: 200px;
+}
+.DivTableB table tr td {
+	text-align: center;
+}
+
+.main_service_bottom {
+    z-index:85;
+    width: 100%;
+    padding-top: 5px;
+    background-image: url(task.png);
+    position:fixed;
+    bottom: 0px;
+}
+
+
+.main_service_bottom table tr:first-child td{
+	text-align: center;
+	height: 25px;
+	color: #FFF;
+	vertical-align: text-bottom;
+}
+.main_service_bottom table tr:last-child td{
+	text-align: center;
+	height: 12px;
+	color: #FFF;
+	font-size: 12px;
+}
+.main_service_bottom table tr td span {
+	font-size: 12px;
+	color: #FFF;
+}

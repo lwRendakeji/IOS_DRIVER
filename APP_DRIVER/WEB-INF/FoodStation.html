@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+<link href="FoodStation.css" rel="stylesheet" type="text/css">
+<link href="X.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=G6aCrTEWg8gGVbbE0xZWwb2h"></script>
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="X.js"></script>
+</head>
+
+<body>
+	<div class="vehicle_top">
+		<div class="vehicle_back">
+			<a href="main_Service.html"><img src="arrow.png" width="30"
+				height="30" longdesc="arrow.png"></a>
+		</div>
+		<div class="vehicle_home">
+			<a href="main.html">
+				<div>
+					<img src="tab_weixin_normal.png">
+				</div>
+			</a>
+		</div>
+		<div>餐饮</div>
+	</div>
+	<!-- 空块-->
+	<div class="div_duan"></div>
+	<!--style="display:none"-->
+	<div id="l-map"></div>
+	<div id="r-result"></div>
+
+	<script type="text/javascript">
+        if(X.cookie.get('iphoneversion') == '4'){
+            $('body').css('padding-bottom','100px')
+        }
+	X.html.setOverlay();
+	var total=-1,currIndex=0;
+	var map = new BMap.Map("l-map");        
+	var r_point_lng,r_point_lat,output;	
+	var num_value=0;
+	var local = new BMap.LocalSearch(map);
+	
+	$(function(){
+		r_point_lng=X.cookie.get("lng"),r_point_lat=X.cookie.get("lat");
+		var mPoint = new BMap.Point(r_point_lng ,r_point_lat);  
+		map.enableScrollWheelZoom();
+		map.centerAndZoom(mPoint,15);
+		var local =  new BMap.LocalSearch(map, {onSearchComplete:function(result){
+				total = result.wr.length;
+				if(total == 0){
+					X.html.removeOverlay();
+				}else{
+					for (var i = 0; i < result.wr.length; i ++){
+						juli( result.wr[i].title,result.wr[i].address,result.wr[i].phoneNumber,r_point_lng,r_point_lat,result.wr[i].point.lng,result.wr[i].point.lat);
+					}
+				}
+			}
+		});  
+	   local.searchNearby("餐饮",mPoint,10000);
+	});
+// 百度地图API功能
+<!--字符串截取-->
+function tel_substring(tel){
+<!--	var str=tel.substring(0,tel.length-2);-->
+	if(tel.indexOf(";") !=-1){
+		var str=tel.split(";");
+		return str[0].toString();
+	}
+   if(tel.indexOf(",") >-1){
+		var str=tel.split(",");
+		return str[0].toString();
+	}
+	return tel;
+}
+	<!--距离截取-->
+function juli_substring(juli){
+	if(juli.indexOf("米")> -1){
+		var str=juli.split("米");
+		return parseFloat(str[0]);
+	}
+   if(juli.indexOf("公里") >-1){
+		var str=juli.split("公里");
+		return parseFloat(str[0]);
+	}
+	return juli;
+}
+	
+function juli( title,address,phoneNumber,r_point_lng,r_point_lat,lng,lat){
+	// 百度地图API功能
+	var searchComplete = function (results_a){
+		
+		if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+				return ;
+			}
+			currIndex++;
+			var plan = results_a.getPlan(0);
+			output = plan.getDistance(true); //获取距离
+			
+			<!-- 如果是 XX米 就除1000-->
+			var num_float=juli_substring(output);
+			if(num_float>100){num_float=num_float/1000}
+						
+			var divTable = document.createElement("div");
+			divTable.className="divTable";
+			divTable.dataset.id=num_float;
+			
+			
+			var divTable_tr1 = document.createElement("div");
+			divTable_tr1.className="divTable_tr1";
+			document.body.appendChild(divTable);
+			divTable.appendChild(divTable_tr1);
+			
+			var divTable_tr1_1 = document.createElement("div");
+			divTable_tr1_1.className="divTable_tr1_1";
+			divTable_tr1_1.innerHTML=title
+			divTable_tr1.appendChild(divTable_tr1_1);
+			
+			
+			
+			
+			var divTable_tr1_2 = document.createElement("div");
+			divTable_tr1_2.className="divTable_tr1_2";
+			divTable_tr1_2.innerHTML=output;           //获取距离
+			divTable_tr1.appendChild(divTable_tr1_2);
+			
+			var divTable_tr2 = document.createElement("div");
+			divTable_tr2.className="divTable_tr1";
+			divTable_tr2.innerHTML=address;
+			divTable.appendChild(divTable_tr2);
+			
+			var divTable_tr3 = document.createElement("div");
+			divTable_tr3.className="divTable_tr2";
+			divTable.appendChild(divTable_tr3);
+			var goHTML="daohang.html?action=FoodStation,"+r_point_lat+","+r_point_lng+","+lat+","+lng;
+			var divTable_tr3_1 = document.createElement("div");
+			divTable_tr3_1.className="divTable_tr2_1";
+			divTable_tr3_1.innerHTML="<a style='margin-top:30%; color:#000; text-decoration:none;' href='javascript:void(0);' onclick='X.baidunav("+r_point_lng+","+r_point_lat+","+lng+","+lat+");'>去这里</a>";
+            //"<a style='margin-top:30%; color:#000; text-decoration:none;' href='"+goHTML+"'>去这里</a>";
+			divTable_tr3.appendChild(divTable_tr3_1);
+			
+			
+			
+			var str_tel=tel_substring(phoneNumber);
+			
+			var divTable_tr3_2 = document.createElement("div");
+			divTable_tr3_2.className="divTable_tr2_2";
+			divTable_tr3_2.innerHTML=str_tel;//留第一个
+			divTable_tr3.appendChild(divTable_tr3_2);
+					
+			if(currIndex == total){
+				paixu();
+			}
+	}
+		
+	var transit = new BMap.DrivingRoute(map, {renderOptions: {map: map},
+		onSearchComplete: searchComplete,
+		});
+		
+	transit.search(new BMap.Point(r_point_lng, r_point_lat), new BMap.Point(lng, lat));
+
+}
+
+
+function paixu(){
+	var aDiv = $('div.divTable');
+	var arr = [];
+	
+	for(var i=0;i<aDiv.size();i++)
+	{
+		arr.push(aDiv[i]);  //aDiv是元素的集合，并不是数组，所以不能直接用数组的sort进行排序。
+	}
+	
+	arr.sort(function(a,b){return a.getAttribute('data-id') - b.getAttribute('data-id')});
+	
+	for(var i=0;i<arr.length;i++)
+	{
+		document.body.appendChild(arr[i]); //将排好序的元素，重新塞到body里面显示。
+	}
+	
+	X.html.removeOverlay();
+	
+}						
+
+
+	
+</script>
+
+
+
+</body>
+</html>

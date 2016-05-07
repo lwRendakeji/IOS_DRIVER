@@ -1,0 +1,75 @@
+@charset "utf-8";
+/* CSS Document */
+
+.vehicle_top {
+    background-image: url(task.png);
+     font-size: 24px;
+    color: #FFF;
+    height: 64px;
+    line-height:84px;
+    width: 100%;
+    text-align: center;
+    position:fixed;
+    top:0px;
+    z-index:3;
+}
+.vehicle_top div{
+    width:50%;
+    margin:0 auto;
+}
+.div_duan {
+    margin-top:70px;
+}
+.vehicle_top .vehicle_back {
+	float: left;
+	height: 30px;
+	width: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+body {
+	background-color: #F5F5F5;
+	margin: 0px;
+	padding: 0px;
+}
+.div_center {
+	height: auto;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	text-align: center;
+	margin-top: 10px;
+}
+.div_center input {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	border: 2px double #777;
+	font-size: 18px;
+	color: #000;
+}
+.div_center:last-child input {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 18px;
+	color: #FFF;
+	margin-bottom: 30px;
+	background-image: url(task.png);
+	border: 1px solid #018CC7;
+}
+
+
+
+.div_center .divtel {
+    width: 80%;
+    height:25px;
+    line-height:25px;
+    color:#CCC;
+    margin: 0 auto;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+}

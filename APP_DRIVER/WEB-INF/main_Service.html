@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+<link href="main_Service.css" rel="stylesheet" type="text/css">
+<link href="X.css" rel="stylesheet" type="text/css">
+<script src="jquery-2.1.0.js" type="text/javascript"></script>
+<script type="text/javascript" src="cities.js"></script>
+<script type="text/javascript" src="X.js"></script>
+<script>
+var city_id;
+$(function() {
+  
+  var mydate = new Date();
+  
+  var str = "" + mydate.getFullYear() + "-";
+  str += (mydate.getMonth()+1) + "-";
+  str += mydate.getDate();
+  
+  var xq = "星期";
+  xq += "天一二三四五六".charAt(mydate.getDay());
+  
+  $("#sj").text(str);
+  
+  $("#xq").text(xq);
+  
+  
+	$('#citys ul').delegate('li','click',function(e){
+        $('#city_name').val($(this).text());
+        });
+	$('#dianji_CityList').click(function(){
+		X.city.showCitySelection(this.id,getWeather);
+	});
+  
+  
+  
+  if(X.cookie.get('iphoneversion')==6){
+    $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
+  
+  }
+  if(X.cookie.get('iphoneversion')=='ipad'){
+
+    $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
+  $(".main_service_bottom").css({"height":"70px"});
+  $(".main_service_bottom table tr:first-child td").css({"height":"40px"});
+  $(".main_service_bottom table img").css({"height":"40px","width":"40px"});
+  $(".main_service_bottom table tr td span").css({"height":"20px","font-size":"20px"});
+  
+  }
+  
+  
+  
+	$("#dianji_CityList").text(X.isEmpty(X.cookie.get('cityname')) ? '' : X.cookie.get('cityname'));
+    getWeather();
+});
+function getWeather(){
+    if(X.isEmpty($('#dianji_CityList').text())) return;
+	X.html.setOverlay(1);
+	X.getWhether($('#dianji_CityList').text());
+}
+function shouye() {
+	window.location.href = "main.html";
+}
+function fuwu() {
+	window.location.href = "main_Service.html";
+}
+function zhaohuo() {
+	<!--找货-->
+	window.location.href = "GoodsFirm.html";
+}
+function wode() {
+	<!--我的-->
+	window.location.href = "Integral.html";
+}
+function wangdian() {
+	<!--网点查询-->
+	window.location.href = "Network.html";
+}
+function checi() {
+	<!--车次查询-->
+	window.location.href = "Trainno.html";
+}
+function fukuanchaxun() {
+	<!--付款查询-->
+	window.location.href = "PayList.html";
+}
+function feiyongchax() {
+	<!--费用查询-->
+	window.location.href = "feequery.html";
+}
+function jiayouzhan() {
+	<!--加油站-->
+    if(X.isEmpty(X.cookie.get('lat')) || X.isEmpty(X.cookie.get('lng')) || parseFloat(X.cookie.get('lat')) == 0 || parseFloat(X.cookie.get('lng')) == 0){
+        X.dialog('未能获取有效的定位信息,无法搜索周边');
+        return;
+    }
+	window.location.href = "OilStation.html";
+}
+function zhusu() {
+	<!--住宿-->
+    if(X.isEmpty(X.cookie.get('lat')) || X.isEmpty(X.cookie.get('lng')) || parseFloat(X.cookie.get('lat')) == 0 || parseFloat(X.cookie.get('lng')) == 0){
+        X.dialog('未能获取有效的定位信息,无法搜索周边');
+        return;
+    }
+	window.location.href = "HouseStation.html";
+}
+function xiulichang() {
+	<!--修理厂-->
+    if(X.isEmpty(X.cookie.get('lat')) || X.isEmpty(X.cookie.get('lng')) || parseFloat(X.cookie.get('lat')) == 0 || parseFloat(X.cookie.get('lng')) == 0){
+        X.dialog('未能获取有效的定位信息,无法搜索周边');
+        return;
+    }
+	window.location.href = "RepairStation.html";
+
+}
+function canyin() {
+	<!--餐饮-->
+    if(X.isEmpty(X.cookie.get('lat')) || X.isEmpty(X.cookie.get('lng')) || parseFloat(X.cookie.get('lat')) == 0 || parseFloat(X.cookie.get('lng')) == 0){
+        X.dialog('未能获取有效的定位信息,无法搜索周边');
+        return;
+    }
+	window.location.href = "FoodStation.html";
+}
+/*function MM_goToURL() { //v3.0
+ var i, args=MM_goToURL.arguments; document.MM_returnValue = false;
+ for (i=0; i<(args.length-1); i+=2) eval(args[i]+".location='"+args[i+1]+"'");
+ }*/
+function weatherResult(jsonResult) {
+	if (X.html.connError(jsonResult)) return;
+	var data = jsonResult.result;
+	var date = new Date();
+	for ( var x in data) {
+		$('#mintmp' + x).text(data[x].MINTMP);
+		$('#maxtmp' + x).text(data[x].MAXTMP);
+		if (date.getHours() < 18) {
+			$('#condtxt' + x).text(data[x].TXT_D);
+			$('#weatherImg' + x).attr('src',
+					X.getWeatherImg(data[x].TXT_D));
+		} else {
+			$('#condtxt' + x).text(data[x].TXT_N);
+			$('#weatherImg' + x).attr('src',
+					X.getWeatherImg(data[x].TXT_N));
+		}
+	}
+	$('#winddir0').text(data[0].WINDDIR);
+}
+</script>
+</head>
+<body>
+	<!--服务_头部-->
+	<div class="vehicle_top">
+		<div class="vehicle_back">
+			<a href="main.html"> <img src="arrow.png" width="30" height="30"
+				longdesc="arrow.png">
+			</a>
+		</div>
+        <div class="vehicle_home">
+            <a href="javascript:void(0);">
+                <span id="dianji_CityList"></span>
+                <span> <img src="city_qry.png"> </span>
+            </a>
+        </div>
+		<div>车辆服务</div>
+	</div>
+	<!-- 空块-->
+	<div class="div_duan"></div>
+
+	<!--服务_信息显示-->
+	<div class="DivTable">
+		<div class="DivTable_tdA">
+			<strong id="sj"> </strong> &nbsp;<strong id="xq"> </strong>
+		</div>
+
+		<div class="DivTable_tdB">
+			<div>
+				今日:<br> <img id="weatherImg0" src="s_1.png" width="48"
+					height="48">
+			</div>
+
+			<div>
+				气温:<span id="mintmp0"></span>℃~<span id="maxtmp0"></span>℃<br>
+				天气:<span id="condtxt0"></span><br> 风向:<span id="winddir0"></span><br>
+			</div>
+		</div>
+
+
+		<div class="DivTable_tdC">
+			<div>
+				<table width="100%" cellspacing="0" cellpadding="0">
+					<tr>
+						<td>明天</td>
+						<td><span id="condtxt1"></span></td>
+					</tr>
+					<tr>
+						<td><img id="weatherImg1" src="s_7.png" width="30"
+							height="30"></td>
+						<td><span id="mintmp1"></span>℃~<span id="maxtmp1"></span>℃</td>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<table width="100%" cellspacing="0" cellpadding="0">
+					<tr>
+						<td>后天</td>
+						<td><span id="condtxt2"></span></td>
+					</tr>
+					<tr>
+						<td><img id="weatherImg2" src="s_7.png" width="30"
+							height="30"></td>
+						<td><span id="mintmp2"></span>℃~<span id="maxtmp2"></span>℃</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+	<!--服务_功能点-->
+	<div class="DivTableB">
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tr>
+				<td onClick="canyin()"><img src="service1.png" ><br> <span>餐饮</span></td>
+				<td onClick="xiulichang()"><img src="service2.png" > <br> <span>修理厂</span></td>
+				<td onClick="zhusu()"><img src="service7.png" > <br> <span>住宿</span></td>
+				<td onClick="jiayouzhan()"><img src="service6.png" ><br> <span>加油站</span></td>
+			</tr>
+			<!--2-->
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td onClick="feiyongchax()"><img src="service5.png" ><br> <span>费用查询</span></td>
+				<td onClick="fukuanchaxun()"><img src="service3.png" ><br> <span>付款查询</span></td>
+				<td onClick="checi()"><img src="service4.png" ><br> <span>车次查询</span></td>
+				<td onClick="wangdian()"><img src="service8.png" ><br> <span>网点查询</span></td>
+			</tr>
+		</table>
+	</div>
+
+
+	<!--底部-->
+	<div class="main_service_bottom">
+		<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td onClick="shouye()"><img src="tab_weixin_normal.png"
+					width="30" height="25"> <br> <span>首页</span></td>
+
+				<td onClick="fuwu()"><img src="tab_address_pressed.png"
+					width="30" height="25"> <br> <span>服务</span></td>
+
+				<td onClick="zhaohuo()"><img src="tab_find_frd_normal.png"
+					width="30" height="25"> <br> <span>找货</span></td>
+
+				<td onClick="wode()"><img src="tab_settings_normal.png"
+					width="30" height="25"> <br> <span>我的</span></td>
+
+			</tr>
+
+		</table>
+
+	</div>
+<div class="overlayCity">
+    <div class="search-citys">
+        <input class="text" id="city_name" type="text" placeholder="请输入城市中文或拼音 / 点击选择城市" oninput="X.city.keyup();"/>
+        <div class="search-text" id="citys" onClick="X.city.blur(city_id,getWeather);">
+            <ul></ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+<link href="LoadList.css" rel="stylesheet" type="text/css">
+<link href="X.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="X.js"></script>
+<script>
+	var checkItem1 = {};
+	var result, clickflag = true;
+	$(function() {
+		var data = {};
+		data.MAIN_TEL = X.cookie.get('username');
+		X.html.setOverlay();
+		X.soap(data, 'ReceiveService', 'getTrsInfo');
+	});
+
+	function resultList(jsonResult) {
+		result = jsonResult.result;
+		X.html.putDataIntoTable(
+						result,
+						X.html.getTableTrsWithCheckbox(),
+						{
+							'input[type="checkbox"]' : function(e) {
+								if ($(this).is(':checked')) {
+									checkItem1[$(this).parent().parent().index()] = $(this).is(':checked');
+								} else {
+									delete checkItem1[$(this).parent().parent().index()];
+								}
+								clickflag = false;
+							},
+							'.table tr' : function() {
+								if (clickflag) {
+									if (X.isEmpty(result[$(this).index()].TRS_ID)
+											|| X.isEmpty(result[$(this).index()].TRANS_GROUP_ID)) {
+										X.dialog('运单号或合同号不能为空');
+										return;
+									}
+									window.location.href = 'OrderList.html?inputs&TRS_ID='
+											+ result[$(this).index()].TRS_ID
+											+ '&TRANS_GROUP_ID='
+											+ result[$(this).index()].TRANS_GROUP_ID;
+								} else {
+									clickflag = true;
+								}
+							}
+						});
+	}
+	function doLoad() {
+		if (X.getObjLenOrCompare(checkItem1) == 0) {
+			X.dialog("请选择一条记录");
+			return;
+		}
+		if (X.getObjLenOrCompare(checkItem1, 1)) {
+			X.dialog("不能做批量签收");
+			return;
+		}
+		var index = 0;
+		for ( var x in checkItem1) {
+			index = x;
+		}
+		if (X.isEmpty(result[index].TRS_ID)) {
+			X.dialog("所选记录的运单号为空，请检查");
+			return;
+		}
+		window.location.href = "SignConfirm.html?inputs&TRS_ID="
+				+ result[index].TRS_ID;
+	}
+</script>
+</head>
+
+<body onload="X.snail();">
+	<!--到货签收-->
+	<div class="vehicle_top">
+		<div class="vehicle_back">
+			<a href="main.html"><img src="arrow.png" width="30" height="30"
+				longdesc="arrow.png"></a>
+		</div>
+		<div class="vehicle_home">
+			<a href="javascript:void(0);" onclick="doLoad();">签收</a>
+		</div>
+		<div>运单列表</div>
+	</div>
+	<!-- 空块-->
+	<div class="div_duan"></div>
+
+	<div class="divTable">
+		<div class="divTable_head">
+			<table width="100%" cellspacing="0" cellpadding="0" class="table">
+				<!--首行-->
+				<thead>
+					<tr>
+						<th scope="col">&nbsp;</th>
+						<th id="TRS_ID" scope="col">运单号</th>
+						<th id="CONVEYANCE_ID" scope="col">车牌号</th>
+						<th id="TRANS_GROUP_ID" scope="col">合同号</th>
+						<th id="END_ID_NAME" scope="col">目的城市</th>
+						<th id="BUSS_NAME" scope="col">承运商</th>
+					</tr>
+				</thead>
+				<!--信息显示区域-->
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

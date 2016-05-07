@@ -1,0 +1,89 @@
+@charset "utf-8";
+/* CSS Document */
+
+.vehicle_top {
+    background-image: url(task.png);
+    font-size: 24px;
+    color: #FFF;
+    height: 64px;
+    line-height:84px;
+    width: 100%;
+    text-align: center;
+    position:fixed;
+    top:0px;
+    z-index:3;
+}
+
+.div_duan {
+    margin-top:64px;
+}
+.vehicle_top #no_id{
+    font-size:18px;
+    margin-left:10px;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+.vehicle_top .vehicle_back {
+    margin-top:5px;
+	float: left;
+	height: 30px;
+	width: 30px;
+	margin-left: 5px;
+}
+.vehicle_top .vehicle_home {
+	float: right;
+	margin-right: 10px;
+	height: 30px;
+	width: 40px;
+}
+.vehicle_top .vehicle_home a {
+	font-size: 16px;
+	color: #FFF;
+	text-decoration: none;
+}
+.vehicle_top .vehicle_center {
+	height: 30px;
+    width: 50%;display:inline;
+	text-align: content;
+    margin:0 auto;
+}
+
+
+.divTable {
+	width: 100%;
+	overflow-x: auto;
+	height: 100%;
+}
+.divTable .divTable_head {
+	width: 800px;
+	height: 100%;
+}
+table thead tr th:first-child{
+	text-decoration: none;
+	background-color: #F00;
+	width: 20px;
+	text-align: center;
+	border-right-width: 1px;
+	border-right-style: solid;
+    border-right-color: #CCC;
+	font-weight: 530;
+	color: #FFF;
+}
+table thead tr th{
+	text-decoration: none;
+	background-color: #F00;
+	width: 100px;
+	text-align: center;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #CCC;
+	font-weight: 530;
+	color: #FFF;
+}
+.table td{
+    border-right:1px solid #CCC;
+    border-bottom:1px solid #CCC;
+}

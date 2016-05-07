@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+                <title>Score View</title>
+                <script type="text/javascript" src="jquery-2.1.0.js"></script>
+                <script type="text/javascript" src="X.js"></script>
+                <link rel="stylesheet" type="text/css" href="X.css"/>
+                <script type="text/javascript">
+                    </script>
+    </head>
+    <body>
+        <div class="title">
+            <img src="" id="btnBack" onclick="X.html.goBack();"/>
+            <span>运单列表</span>
+            <img src="home.png" id="btnHome" onclick="X.html.goHome();"/>
+        </div>
+        <div class="details">
+            <ul>
+                <!-- 分屏1-->
+                <li class="isSelected">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td style="width:10%;"></td>
+                                <td style="width:30%;">运单号</td>
+                                <td style="width:30%;">发运日期</td>
+                                <td style="width:30%;">合同号</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </li>
+                <!-- 分屏2-->
+                <li>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td style="width:10%;"></td>
+                                <td style="width:30%;">运单号</td>
+                                <td style="width:30%;">起点城市</td>
+                                <td style="width:30%;">终点城市</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

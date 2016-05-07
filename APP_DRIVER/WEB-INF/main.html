@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+<link href="main.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="GUOLI_main.js"></script>
+<script type="text/javascript" src="X.js"></script>
+<script type="text/javascript">
+    
+    $(function(){
+      
+      if(X.cookie.get('iphoneversion')=='ipad'){
+      $("div.main_service_left_divbored").css({"height":"153px"});
+      $("div.main_service_left_divbored_1").css({"height":"150px"});
+      $("div.main_service_left_divbored_2").css({"height":"100px","padding-top":"40px"});
+      
+      $("div.main_service_left_divbored img").css({"width":"40%"});
+      $("div.main_service_left_divbored_1 img").css({"width":"40%"});
+      $("div.main_service_left_divbored_2 img").css({"width":"60%"});
+      
+      
+      $("div.main_service_reght_divbored").css({"height":"150px"});
+      $("div.main_service_reght_divbored_1").css({"height":"150px"});
+      $("div.main_service_reght_divbored_2").css({"height":"150px"});
+      
+      $("div.main_service_reght_divbored img").css({"width":"40%"});
+      $("div.main_service_reght_divbored_1 img").css({"width":"40%"});
+      $("div.main_service_reght_divbored_2 img").css({"width":"40%"});
+      
+      $(".main_body .lunbo").css({"height":"400px"});
+      $(".main_body .lunbo #content .scroll_mid").css({"height":"400px"});
+      $(".main_body .lunbo #content .scroll_mid #scroll_img li img").css({"height":"100%"});
+      
+      $("div.main_service_bottom").css({"bottom":"0px","position":"fixed","height":"70px"});
+      $(".main_service_bottom table tr:first-child td").css({"height":"40px"});
+      $(".main_service_bottom table img").css({"height":"40px","width":"40px"});
+      $(".main_service_bottom table tr td span").css({"height":"20px","font-size":"20px"});
+      
+      }
+      
+      if(X.cookie.get('iphoneversion')==6||X.cookie.get('iphoneversion')==5){
+      
+      $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
+      
+      $("div.main_service_left_divbored").css({"height":"110px"});
+      $("div.main_service_left_divbored_1").css({"height":"105px"});
+      $("div.main_service_left_divbored_2").css({"height":"47px","padding-top":"13px"});
+      
+      $("div.main_service_left_divbored img").css({"width":"60%"});
+      $("div.main_service_left_divbored_1 img").css({"width":"60%"});
+      $("div.main_service_left_divbored_2 img").css({"width":"80%"});
+      
+      
+      $("div.main_service_reght_divbored").css({"height":"100px"});
+      $("div.main_service_reght_divbored_1").css({"height":"90px"});
+      $("div.main_service_reght_divbored_2").css({"height":"90px"});
+      
+      $("div.main_service_reght_divbored img").css({"width":"60%"});
+      $("div.main_service_reght_divbored_1 img").css({"width":"60%"});
+      $("div.main_service_reght_divbored_2 img").css({"width":"60%"});
+      }
+      
+     
+    
+     // $('div.main_service').css('height',document.body.clientHeight-100+'px');
+      //alert(document.body.clientHeight-100);
+      var t = '<func_mode>FUNC01</func_mode>';
+      X.soap(t,'ExecSqlService','getPicDir');
+      });
+      
+      
+      
+      
+      function resultList(jsonResult){
+          if(X.html.connError(jsonResult)) return;
+          $('#scroll_img li').eq(0).find('img').attr('src',(X.isEmpty(jsonResult.result[0].IMG1)?'':jsonResult.result[0].IMG1));
+          $('#scroll_img li').eq(1).find('img').attr('src',(X.isEmpty(jsonResult.result[0].IMG2)?'':jsonResult.result[0].IMG2));
+          $('#scroll_img li').eq(2).find('img').attr('src',(X.isEmpty(jsonResult.result[0].IMG3)?'':jsonResult.result[0].IMG3));
+      }
+function MM_goToURL() { //v3.0
+  var i, args=MM_goToURL.arguments; document.MM_returnValue = false;
+  for (i=0; i<(args.length-1); i+=2) eval(args[i]+".location='"+args[i+1]+"'");
+}
+function shouye(){
+	window.location.href="main.html";
+	}
+function fuwu(){
+	window.location.href="main_Service.html";
+	}
+function zhaohuo(){
+	window.location.href="GoodsFirm.html";
+	}
+function wode(){
+	window.location.href="Integral.html";
+	}
+function caozuoshuoming(){
+    window.location.href="caozuoshuoming.html?html=main";
+}
+function shangcheng(){
+    window.location.href="GLShop.html?html=main";
+}
+</script>
+</head>
+<body>
+<!--头部-->
+<div class="vehicle_top">
+    <div class="vehicle_back"><a href="message.html"><img src="mail.png" width="30px" height="30px"></a></div>
+    <div>途易行</div>
+</div>
+     <!-- 空块-->  
+  <div class="div_duan"></div> 
+<!--主要视图 -->
+<div class="main_body" > 
+  <!--图片轮播  300  125-->
+  <div class="lunbo" >
+  <div id="content">
+    <div class="scroll_mid">
+      <ul id="scroll_img">
+        <li><img src="" height="30%" width="100%" /></li>
+        <li><img src="" height="30%" width="100%" onClick="caozuoshuoming();"/></li>
+        <li><img src="" height="30%" width="100%" onClick="shangcheng();"/></li>
+      </ul>
+      <ul id="scroll_number" name="scroll_number" style="display:none;">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+      </ul>
+    </div>
+   </div> 
+  </div>
+  <!--主要功能区-->
+<div class="main_service"> 
+    <!--左边功能区-->
+    <div class="main_service_left">
+      <div class="imgjuzhong"> <a href="roadCondition.html">
+        <div class="main_service_left_divbored"> <img src="main_road.png" width="40%"></div>
+        </a></div>
+      <div class="imgjuzhong"> <a href="complain.html">
+        <div class="main_service_left_divbored_1"> <img src="main_advise.png" width="40%"></div>
+        </a> </div>
+      <div class="imgjuzhong"> <a href="javascript:void(0)" onclick="X.call('055166730006')">
+        <div class="main_service_left_divbored_2"> <img src="main_tel.png" width="60%" /></div>
+        </a> </div>
+    </div>
+    <!--右边功能区-->
+    <div class="main_service_reght">
+      <div class="imgjuzhong"> <a href="loadlist.html">
+        <div class="main_service_reght_divbored"><img src="main_sign.png" width="40%"></div>
+        </a> </div>
+      <div class="imgjuzhong"> <a href="Evaluate.html" >
+        <div class="main_service_reght_divbored_1"> <img src="main_score.png" width="40%"></div>
+        </a> </div>
+      <div class="imgjuzhong"> <a href="Invitation.html">
+        <div class="main_service_reght_divbored_2"> <img src="main_invit.png" width="40%"></div>
+        </a> 
+      </div>
+    </div>
+  </div>
+  <!--主方法底部-->
+ <div class="main_service_bottom">
+     <table width="100%" cellspacing="0" cellpadding="0">
+      <tr>
+         <td onClick="shouye()">  
+           <img src="tab_weixin_pressed.png" width="30" height="25">
+           <br><span>首页</span>
+        </td>
+        <td onClick="fuwu()">
+       	 <img src="tab_address_normal.png" width="30" height="25">
+         <br><span>服务</span>
+        </td>
+       <td onClick="zhaohuo()">
+          <img src="tab_find_frd_normal.png" width="30" height="25">
+          <br><span>找货</span>
+        </td>
+       <td onClick="wode()">
+          <img src="tab_settings_normal.png" width="30" height="25">
+          <br><span>我的</span>
+        </td>
+      </tr>
+    </table>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+<link href="OrderList.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="X.js"></script>
+<link href="X.css" rel="stylesheet" type="text/css">
+<script>
+var result;
+$(function(){
+	$('.vehicle_center label').text(X.html.getInputs().TRANS_GROUP_ID);
+	var data = {};
+	data.TRS_ID = X.html.getInputs().TRS_ID;
+    X.html.setOverlay();
+	X.soap(data, 'ReceiveService', 'getOrderInfo');
+});
+function resultList(jsonResult){
+	result = jsonResult.result;
+	X.html.putDataIntoTable(result,X.html.getTableTrsWithCheckbox());
+}
+function doLoad(){
+	var orders = '';
+	$('.table tbody input[type="checkbox"]').each(function(){
+		orders = orders + result[$(this).parent().parent().index()].SO_ID +　',';
+	});
+	var data = {};
+	data.TRS_ID = X.html.getInputs().TRS_ID;
+	if(X.isEmpty(orders)){
+		data.ORDER = orders.substring(0,orders.length);
+	}
+	window.location.href = X.html.setInputs(data, 'SignConfirm.html');
+}
+</script>
+</head>
+
+<body>
+<body onload="X.snail();">
+<!--到货签收_点击某一条数据后 进入的页面-->
+<div class="vehicle_top">
+  <div class="vehicle_back"><a href="loadlist.html" ><img src="arrow.png" width="30" height="30" longdesc="arrow.png"></a></div>
+  <div class="vehicle_home"><a href="javascript:void(0)" onclick="doLoad();">签收</a></div>
+  <div class="vehicle_center">合同号<label id="no_id"></label></div>
+</div>
+
+     <!-- 空块-->  
+  <div class="div_duan"></div> 
+
+<div class="divTable"> 
+  <div class="divTable_head">
+    <table width="100%"  cellspacing="0" cellpadding="0" class="table">
+     <!--首行-->
+      <thead>
+        <tr> 
+          <th scope="col">&nbsp;</th>
+          <th id="SO_ID" scope="col">订单号</th>
+          <th id="CUSTOMER_ORDER_ID" scope="col">客户单号</th>
+          <th id="BUSS_NAME" scope="col">客户</th>
+          <th id="START_AREA_ID_NAME" scope="col">起点城市</th>
+          <th id="END_AREA_ID_NAME" scope="col">终点城市</th>
+          <th id="END_CONTACT" scope="col">联系人</th>
+          <th id="END_TEL" scope="col">联系电话</th>
+        </tr>
+      </thead>
+ <!--信息显示区域-->
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

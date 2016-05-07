@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<title>途易行</title>
+<link href="GoodsFirm.css" rel="stylesheet" type="text/css">
+<link href="X.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script src="cities.js"  type="text/javascript"></script>
+<script type="text/javascript" src="X.js"></script>
+<script type="text/javascript">
+  var ROWNUMBER = "0";//分页
+  var num="10";//每次加载多少条数据
+  var flag=false;//判断返回数据是否为空
+  
+  $(function(){
+    
+      if(X.cookie.get('iphoneversion')==6){
+          $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
+          $(".div_overflow").css({"height":"400px","margin-bottom":"0px"});
+          };
+          if(X.cookie.get('iphoneversion')==4){
+          $(".div_overflow").css("height","310px");
+      }
+      if(X.cookie.get('iphoneversion')=='ipad'){ //ipad
+          $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
+          $(".div_overflow").css({"height":"890px","margin-bottom":"0px"});
+          $(".main_service_bottom").css({"height":"70px"});
+          $(".main_service_bottom table tr:first-child td").css({"height":"40px"});
+          $(".main_service_bottom table img").css({"height":"40px","width":"40px"});
+          $(".main_service_bottom table tr td span").css({"height":"20px","font-size":"20px"});
+      }
+      
+     
+     $("#dianji_CityList").text('城市');
+ 
+    
+    $('#citys ul').delegate('li', 'click', function(e) {
+       $('#city_name').val($(this).text());
+    });
+    
+  getGoods();
+
+ /* $('#dianji_CityList').click(function() {
+      X.city.showCitySelection(this.id,getGoods);*/
+    
+    
+    
+    
+    
+});
+    
+      
+
+
+
+
+function getGoods(){
+  
+ if(X.isEmpty($('#dianji_CityList').text())) return;
+    var data = {};
+    data.USER_ID = X.cookie.get('username');
+    data.ROLE_ID = X.cookie.get('role_id');
+    data.ROWNUMBER = ROWNUMBER;
+    if(($('#dianji_CityList').text())!='城市')data.CITY = $('#dianji_CityList').text();
+    X.html.setOverlay();
+    X.soap(data, 'GoodsPublishService', 'getGoods');
+
+}
+
+
+function getGoods2(ROWNUMBER){
+   
+    if(X.isEmpty($('#dianji_CityList').text())) return;
+    var data = {};
+    data.USER_ID = X.cookie.get('username');
+    data.ROLE_ID = X.cookie.get('role_id');
+    data.ROWNUMBER = ROWNUMBER;
+    if(($('#dianji_CityList').text())!='城市')data.CITY = $('#dianji_CityList').text();
+    
+    X.soap(data, 'GoodsPublishService', 'getGoods');
+    
+}
+
+
+
+function resultList(jsonResult) {
+    if(X.html.connError(jsonResult)) return;
+    var result = jsonResult.result;
+    var cls = 'div_overflow';
+   // $('.' + cls).remove();
+    if (!result instanceof Array) {
+        if (X.getObjLenOrCompare(result, 0)) {
+            var array = new Array();
+            array[0] = result;
+            result = array;
+        }
+    }
+  
+    var divBody = $('.detailBodyModel').html();
+    if (X.isEmpty(divBody)) {
+        X.dialog('未能获取有效的数据填充区域');
+        $('.overlayX').css('display', 'none');
+        return;
+    }
+
+        //判断result是否为空
+    if(result.length == 0){
+            $('.overlayX').css('display','none');
+            flag=true;//判断返回结果
+            if ($('#NoData').length <= 0) {
+               $('.'+cls).append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
+            }
+            setTimeout(function(){
+              $('#NoData').remove();
+            }, 5000);
+            return false;
+    }else{
+        if ($('.' + cls).length <= 0) {
+            $('body').append('<div class="'+cls+'"></div>');
+            //分页 当创建 div时 就添加监听
+            $(".div_overflow").css({"overflow":"scroll"});
+            $(".div_overflow").scroll(function() {
+              var $this =$(this),
+              viewH =$(this).height(),//可见高度
+              contentH =$(this).get(0).scrollHeight,//内容高度
+              scrollTop =$(this).scrollTop();//滚动高度
+              
+              if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+                if(!flag){
+                  X.html.setOverlay();
+                  setTimeout(function(){
+                    var las_number = Number(ROWNUMBER) + Number(num);
+                    ROWNUMBER=las_number;
+                    getGoods2(ROWNUMBER);
+                  }, 1000);
+                }
+                  
+               }
+              
+              
+             });//滚动事件结束
+            
+        }
+       
+
+        
+        $('.'+cls).each(function() {
+                          var div = $(this);
+                          var date = new Date();
+                          for (var i = 0; i < result.length; i++) {
+                          if (!X.getObjLenOrCompare(result[i], 0))
+                          continue;
+                          div.append(divBody);
+                          var mi = 0;
+                          var m = '';
+                          $('.FROM_CITY:last strong').text(
+                                                           result[i].FROM_CITY);
+                          $('.CITY:last strong').text(result[i].CITY);
+                          $('.PUBLISH_TEL:last').html(
+                                                      result[i].PUBLISH_TEL);
+                          var date2 = new Date(result[i].PUBLISH_DATE
+                                               .substring(0,
+                                                          result[i].PUBLISH_DATE
+                                                          .indexOf('.')).replace( /-/g, '/'));
+                          mi = parseInt((date.getTime() - date2.getTime()) / 1000 / 60 + 1);
+                          if (mi > 60) {
+                          m = m + parseInt(mi / 60) + '时' + mi % 60+ '分';
+                          } else if(mi > 0){
+                          m = m + mi + '分';
+                          }else{
+                          m = m + '0分';
+                          }
+                          m = m + ' 前';
+                          $('.TO_DATE:last').html(m);
+                          $('.GOODS_TYPE_NAME:last')
+                          .html(
+                                '  '
+                                + (X
+                                   .isEmpty(result[i].GOODS_TYPE_NAME) ? '  '
+                                   : result[i].GOODS_TYPE_NAME)
+                                + '/'
+                                + (X
+                                   .isEmpty(result[i].BIZ_TYPE_NAME) ? '  '
+                                   : result[i].BIZ_TYPE_NAME)
+                                + '/'
+                                + (X
+                                   .isEmpty(result[i].VEHICLE_TYPE_NAME) ? '  '
+                                   : result[i].VEHICLE_TYPE_NAME)
+                                + '/'
+                                + (X
+                                   .isEmpty(result[i].GOODS_NAME) ? '  '
+                                   : result[i].GOODS_NAME));
+                          $('.NOTES:last').html(result[i].NOTES);
+                          }
+                          });
+                          $('.PUBLISH_TEL').click(function(){
+                                                  clickFlag = false;
+                                                  X.call($(this).text());
+                                                  });
+                                       
+          $('.overlayX').css('display', 'none');
+         
+
+    }//判断 返回结果是否为空 结束
+
+
+}//方法结束
+
+
+
+
+
+function shouye() {
+    window.location.href = "main.html";
+}
+function fuwu() {
+		window.location.href = "main_Service.html";
+	}
+	function zhaohuo() {
+		window.location.href = "GoodsFirm.html";
+	}
+	function wode() {
+		window.location.href = "Integral.html";
+	}
+
+
+</script>
+</head>
+
+<body>
+	<!--<button onclick="resultList();"></button>-->
+	<!--货源列表头部-->
+	<div class="vehicle_top">
+		<div class="vehicle_back">
+			<a href="main.html"><img src="arrow.png" width="30" height="30"
+				longdesc="arrow.png"></a>
+		</div>
+        <div class="vehicle_home">
+            <a href="javascript:void(0);">
+                <span id="dianji_CityList">城市</span>
+                <span> <img src="city_qry.png"/> </span>
+            </a>
+        </div>
+		<div>货源列表</div>
+	</div>
+	<!-- 空块-->
+	<div class="div_duan"></div>
+
+	<!--司机信息_查询后显示的页面-->
+
+	<div class="detailBodyModel" hidden="hidden" >
+		<div class="divTable">
+			<div class="divTable_tr1">
+				<div class="divTable_tr1_td2">
+					<img src="location.png">
+				</div>
+				<div class="divTable_tr1_td4 FROM_CITY">
+					<strong></strong>
+				</div>
+				<div class="divTable_tr1_td2">
+					<span>--></span>
+				</div>
+				<div class="divTable_tr1_td4 CITY">
+					<strong></strong>
+				</div>
+			</div>
+			<div class="divTable_tr2">
+				<div class="divTable_tr2_td1">
+					<img src="tel.png">
+				</div>
+				<div class="divTable_tr2_td2 PUBLISH_TEL"></div>
+				<div class="divTable_tr2_td1">
+					<img src="clock.png">
+				</div>
+				<div class="divTable_tr2_td2 TO_DATE"></div>
+			</div>
+			<div class="divTable_tr2">
+				<div class="divTable_tr2_td1">
+					<img src="good.png">
+				</div>
+				<div class="divTable_tr2_td3 GOODS_TYPE_NAME"></div>
+			</div>
+			<div class="divTable_tr3">
+				<div class="divTable_tr3_td1">
+					<span>备注:</span>
+				</div>
+				<div class="divTable_tr3_td2 NOTES"></div>
+			</div>
+
+		</div>
+	</div>
+
+	<!--底部-->
+	<div class="main_service_bottom">
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tr>
+				<td onClick="shouye()"><img src="tab_weixin_normal.png"
+					width="30" height="25"> <br> <span>首页</span></td>
+
+				<td onClick="fuwu()"><img src="tab_address_normal.png"
+					width="30" height="25"> <br> <span>服务</span></td>
+
+				<td onClick="zhaohuo()"><img src="tab_find_frd_pressed.png"
+					width="30" height="25"> <br> <span>找货</span></td>
+
+				<td onClick="wode()"><img src="tab_settings_normal.png"
+					width="30" height="25"> <br> <span>我的</span></td>
+
+			</tr>
+
+		</table>
+
+	</div>
+	<div class="overlayCity">
+		<div class="search-citys">
+			<input class="text" id="city_name" type="text"
+				placeholder="请输入城市中文或拼音 / 点击选择城市" oninput="X.city.keyup();"/>
+            <input class="text" id="hide_city_name" type="text" hidden="hidden"/>
+            <div class="search-text" id="citys" onClick="X.city.blur(city_id,getGoods);">
+                <ul></ul>
+            </div>
+		</div>
+	</div>
+</body>
+</html>

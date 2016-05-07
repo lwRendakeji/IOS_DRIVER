@@ -1,0 +1,57 @@
+@charset "utf-8";
+/* CSS Document 
+ 爱你一万年
+ */
+
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #00CCCC;
+	height: 100%;
+	width: 100%;
+	color: #FFF;
+	font-size: 12px;
+}
+p {
+	font-size: 18px;
+}
+
+.title {
+	height: 128px;
+	width: 100%;
+	text-align: center;
+}
+
+
+.vehicle_top {
+    background-image: url(task.png);
+    font-size: 24px;
+    color: #FFF;
+    height: 64px;
+    line-height:84px;
+    width: 100%;
+    text-align: center;
+    position:fixed;
+    top:0px;
+    z-index:3;
+}
+.vehicle_top div{
+    width:50%;
+    margin:0 auto;
+}
+.div_duan {
+    margin-top:70px;
+}
+
+.vehicle_top .vehicle_back {
+	float: left;
+	height: 30px;
+	width: 30px;
+	margin-top: 5px;
+}
+.vehicle_top .vehicle_home {
+	float: right;
+	margin-right: 10px;
+	height: 30px;
+	width: 30px;
+}

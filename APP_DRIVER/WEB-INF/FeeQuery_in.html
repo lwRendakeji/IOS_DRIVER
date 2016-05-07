@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+<link rel="stylesheet" type="text/css" href="X.css"/>
+<link href="FeeQuery_in.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="X.js"></script>
+<script>
+    $(function(){
+      var data = X.html.getInputs();
+      $('#vehicle_id').text(data.VEHICLE_ID);
+      $('#trans_group_id').text(data.TRANS_GROUP_ID);
+      delete data.VEHICLE_ID;
+      delete data.TRANS_GROUP_ID;
+      data.PHONE = X.cookie.get('username');
+      data.PHONE_TYPE = '';
+      if(!X.isEmpty(X.cookie.get('username'))){
+          data.BUSS_ID = X.cookie.get('supplier_id');
+          data.USER_ID = X.cookie.get('username');
+      }
+      X.html.setOverlay();
+      X.soap(data,'FeeQueryService','getKouKuan');
+      });
+    
+    function resultList(jsonResult){
+        if(X.html.connError(jsonResult)) return;
+        $('table tbody').empty();
+        var result = jsonResult.result;
+        if(result.length > 0){
+            var t = '<tr><td></td><td></td><td></td></tr>';
+            for(var x in result){
+                $('table tbody').append(t);
+                var tr = $('table tbody tr:last');
+                tr.find('td').eq(0).text(result[x].TYPE_NAME);
+                tr.find('td').eq(1).text(result[x].SETT_ITEM_NAME);
+                tr.find('td').eq(2).text(result[x].ACT_AMOUNT);
+            }
+        }else{
+            $('table tbody').append('<tr><td colspan="3">未找到任何数据</td></tr>');
+        }
+    }
+</script>
+</head>
+
+<body>
+<!--费用查询 点击后 进入的页面-->
+<div class="vehicle_top">
+  <div class="vehicle_back"><a href="feequery.html"><img src="arrow.png" width="30" height="30" longdesc="arrow.png"></a></div>
+  <div class="vehicle_home">
+   <a href="main.html">
+ 	 <div><img src="tab_weixin_normal.png"></div>
+    </a>
+  </div>
+  <div>补助,扣款,考核</div>
+</div>
+     <!-- 空块-->  
+  <div class="div_duan"></div> 
+
+<table class="divTable" width="100%"cellspacing="0" cellpadding="0">
+  <thead>
+      <tr>
+        <th colspan="3">
+        <div class="divTable_divA">车牌号:</div> <div class="divTable_divB"><span id="vehicle_id"></span></div>
+        <div class="divTable_divA">合同号:</div> <div class="divTable_divB"><span id="trans_group_id"></span></div></th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</body>
+</html>

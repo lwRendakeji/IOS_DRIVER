@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+        
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+<link href="Complain.css" rel="stylesheet" type="text/css">
+<link href="X.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="X.js"></script>
+
+<script>
+    
+function doCommit(){
+
+    var phone =$("input[name='mobile']").val();
+    var name=$("input[name='complain_name']").val();
+    var hua=$("textarea").val();
+
+ 
+   if(X.isEmpty(name)||X.isEmpty(phone)||X.isEmpty(hua)){
+       X.dialog('您未输入任何内容,不能提交!');
+       return;
+   }
+   if(!X.isTel($('input[name="mobile"]').val())){
+       X.dialog('请输入正确的手机号码');
+       return;
+   }
+ 
+   
+	var data = {};
+	data.COMPLAIN_NAME = $('input[name="complain_name"]').val();
+	data.MOBILE = $('input[name="mobile"]').val();
+	data.COMPLAIN_CONTENT = $('textarea').val();
+	data.USER_ID = X.cookie.get('username');
+	data.PHONE = X.cookie.get('username');
+	data.PHONE_TYPE = '';
+	data.ROLE_ID = X.cookie.get('role_id');
+	data.COMPLAIN_TYPE = 'TYP_ONE';
+    X.html.setOverlay(0);
+	X.soap(data, 'ComplainService', 'commitComplain', 'commitResult');
+}
+function commitResult(jsonResult){
+    if(X.html.connError(jsonResult,true)) return;
+	if(!X.isEmpty(jsonResult) && '00' == jsonResult.result[0].RESULT){
+        $('input').val('');
+        $('textarea').val('');
+        $('.overlayX img').css('line-height','10px').remove();
+        $('.overlayX span').css({'vertical-align':'','height':'20px','margin-right':'10px'}).text('您的信息已提交成功,我们会尽快给您回复!');
+        $('.overlayX > div').css({'height':'30px','line-height':'30px','text-align':'center'}).fadeOut(4000,function(){
+                                                                window.location.href = 'main.html';
+                                                                });
+	}else{
+        $('.overlayX').css('display','none');
+		X.dialog(jsonResult.result[0].MSG);
+	}
+}
+function doQuery(){
+	var data = {};
+	data.PHONE = X.cookie.get('username');
+	data.PHONE_TYPE = '';
+	data.USER_ID = X.cookie.get('username');
+	window.location.href = X.html.setInputs(data, 'complainList.html');
+}
+</script>
+</head>
+
+<body>
+<div class="vehicle_top">
+  <div class="vehicle_back"><a href="main.html" ><img src="arrow.png" width="30" height="30" longdesc="arrow.png"></a></div>
+  <div class="vehicle_home"><a href="main.html"><img src="tab_weixin_normal.png" width="30" height="25"></a></div>
+  <div>投诉建议</div>
+</div>
+<!-- 空块-->
+<div class="div_duan"></div>
+
+<table width="90%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>您的称呼:</td>
+    <td><input name="complain_name" type="text"  placeholder="请输入您的姓名"></td>
+  </tr>
+  <tr>
+    <td>联系电话:</td>
+    <td><input name="mobile" type="tel" value="" placeholder="请输入您的联系电话"></td>
+  </tr>
+  <tr>
+    <td>您的留言:</td>
+    <td><textarea name="hua"  placeholder="请输入您要投诉和建议的具体内容"></textarea></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+    	<a href="javascript:void(0)" onclick="doCommit();">提交</a>
+    	<a href="javascript:void(0)" onclick="doQuery();">查看回复</a>
+    </td>
+    
+  </tr>
+</table>
+
+</body>
+</html>

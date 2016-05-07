@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="viewport" content="width=320,maximum-scale=1,initial-scale=1.0,minimum-scale=0.1,user-scalable=no">
+<meta name="format-detection" content="telephone=no">
+<title>途易行</title>
+<link href="X.css" rel="stylesheet" type="text/css">
+<link href="Invitation.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="jquery-2.1.0.js"></script>
+<script type="text/javascript" src="X.js"></script>
+<script>
+function invitation(){
+	if(!X.isTel($('div.divtel').text())){
+		X.dialog('请输入正确的手机号码');
+		return;
+	}
+	var data = {};
+	data.TEL = X.cookie.get('username');
+	data.INVIATE_TEL = $('div.divtel').text();
+	data.ROLE_ID = X.cookie.get('role_id');
+    X.html.setOverlay(0);
+	X.soap(data, 'TelMsgService', 'inviateTeamer');
+};
+function resultList(jsonResult){
+    if(X.html.connError(jsonResult)) return;
+	if('00' == jsonResult.result[0].RESULT){
+		X.dialog('邀请成功');
+		$('input[name="phoneNumber"]').val('');
+	}else{
+		X.dialog(jsonResult.result[0].MSG);
+	}
+};
+$(function(){
+  $('div.divtel').click(function() {
+                        var old=$('div.divtel').text();
+                        $('body').append('<div class="overlayX"><input class="div_inputTel" type="tel" placeholder="请输入邀请好友的手机号码" /></div>');
+                        if(old=='请输入邀请好友的手机号码'){
+                        old='';
+                        }else{
+                        $('div.overlayX input').text(old);
+                        }
+                        
+                        $('.overlayX').css('display','block');
+                        $('div.overlayX input').focus();
+                        
+                        if($('.overlayX').css('display')=='block'){
+                        $('div.overlayX input').val(old);
+                        $('div.overlayX input').change(function(e) {
+                                                       var iphone=$('div.overlayX input').val();
+                                                       $('div.divtel').text(iphone);
+                                                       
+                                                       if($('div.divtel').text().length<=0||$('div.overlayX input').val()=='请输入您的联系电话'){
+                                                       $('div.divtel').text('请输入邀请好友的手机号码');
+                                                       $('div.divtel').css('color','#CCC');
+                                                       }else{
+                                                       $('div.divtel').css('color','#000');
+                                                       }
+                                                       $('div.overlayX').remove();
+                                                       
+                                                       
+                                                       });
+                        }
+                        
+                        $('.overlayX').click(function(){
+                                             $('div').remove('.overlayX');
+                                             });
+                        
+                        });
+  
+  
+  });
+
+
+
+
+
+</script>
+</head>
+
+<body>
+<div class="vehicle_top">
+  <div class="vehicle_back">
+ 		 <a href="main.html"><img src=	"arrow.png" width="30" height="30"></a>
+  </div>
+  <div>邀请好友</div>
+</div>
+
+
+<!-- 空块-->
+<div class="div_duan"></div>
+
+<div class="div_center"><span>邀请好友加入成功,您将获得<span style="color:red">5</span>个积分</span></div>
+<div class="div_center"><img src="qrcode.png" width="250" height="250" /></div>
+<div class="div_center">好友手机号码</div>
+<div class="div_center"> <div class="divtel">请输入邀请好友的手机号码</div></div>
+<div class="div_center"><input type="button" value="发送邀请" onclick="invitation();" /></div>
+
+</body>
+</html>
