@@ -988,6 +988,7 @@
 				ORGANIZATIONNAME = renda;
 				TargetAttributes = {
 					52A2E8371C17C3AC0056F305 = {
+						DevelopmentTeam = 4AU2X8LTD6;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
