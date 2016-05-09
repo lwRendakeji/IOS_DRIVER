@@ -19,24 +19,6 @@
   
   $(function(){
     
-      if(X.cookie.get('iphoneversion')==6){
-          $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
-          $(".div_overflow").css({"height":"400px","margin-bottom":"0px"});
-          $('body').css('height','400px');
-          };
-     if(X.cookie.get('iphoneversion')==4){
-           $('body').css('height','310px');
-           $(".div_overflow").css("height","310px");
-      }
-      if(X.cookie.get('iphoneversion')=='ipad'){ //ipad
-          $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
-          $(".div_overflow").css({"height":"890px","margin-bottom":"0px"});
-          $('body').css('height','890px');
-          $(".main_service_bottom").css({"height":"70px"});
-          $(".main_service_bottom table tr:first-child td").css({"height":"40px"});
-          $(".main_service_bottom table img").css({"height":"40px","width":"40px"});
-          $(".main_service_bottom table tr td span").css({"height":"20px","font-size":"20px"});
-      }
       
      
      $("#dianji_CityList").text('城市');
@@ -130,7 +112,26 @@ function resultList(jsonResult) {
             //$('.div_duan').after('<div class="'+cls+'"></div>');
             $('body').append('<div class="'+cls+'"></div>');
             //分页 当创建 div时 就添加监听
-            $(".div_overflow").css({"overflow":"scroll",'height':'340px'});
+            $(".div_overflow").css({"overflow":"scroll"});
+            if(X.cookie.get('iphoneversion')==6){
+                $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
+                $(".div_overflow").css({"height":"440px","margin-bottom":"0px"});
+                $('body').css('height','440px');
+            };
+            if(X.cookie.get('iphoneversion')==4){
+                $('body').css('height','310px');
+                $(".div_overflow").css("height","310px");
+            }
+            if(X.cookie.get('iphoneversion')=='ipad'){ //ipad
+                $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
+                $(".div_overflow").css({"height":"890px","margin-bottom":"0px"});
+                $('body').css('height','890px');
+                $(".main_service_bottom").css({"height":"70px"});
+                $(".main_service_bottom table tr:first-child td").css({"height":"40px"});
+                $(".main_service_bottom table img").css({"height":"40px","width":"40px"});
+                $(".main_service_bottom table tr td span").css({"height":"20px","font-size":"20px"});
+            }
+            
             $(".div_overflow").scroll(function() {
               var $this =$(this),
               viewH =$(this).height(),//可见高度
@@ -375,7 +376,6 @@ function fuwu() {
                 //遮盖层点击事件
                 function dd(){
                     $('.overlayCity').css('display','none');
-                    alert($('body').css('height'));
                     $('.main_service_bottom').css('position','fixed');
                     $('input[id="cityChoice"]').blur();
                 
