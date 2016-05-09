@@ -22,13 +22,16 @@
       if(X.cookie.get('iphoneversion')==6){
           $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
           $(".div_overflow").css({"height":"400px","margin-bottom":"0px"});
+          $('body').css('height','400px');
           };
-          if(X.cookie.get('iphoneversion')==4){
-          $(".div_overflow").css("height","310px");
+     if(X.cookie.get('iphoneversion')==4){
+           $('body').css('height','310px');
+           $(".div_overflow").css("height","310px");
       }
       if(X.cookie.get('iphoneversion')=='ipad'){ //ipad
           $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
           $(".div_overflow").css({"height":"890px","margin-bottom":"0px"});
+          $('body').css('height','890px');
           $(".main_service_bottom").css({"height":"70px"});
           $(".main_service_bottom table tr:first-child td").css({"height":"40px"});
           $(".main_service_bottom table img").css({"height":"40px","width":"40px"});
@@ -115,18 +118,19 @@ function resultList(jsonResult) {
             $('.overlayX').css('display','none');
             flag=true;//判断返回结果
            
-            if ($('#NoData').length <= 0) {
+          /*  if ($('#NoData').length <= 0) {
                 $('body').append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
             }
             setTimeout(function(){
               $('#NoData').remove();
-            }, 5000);
+            }, 5000);*/
             return false;
     }else{
         if ($('.' + cls).length <= 0) {
+            //$('.div_duan').after('<div class="'+cls+'"></div>');
             $('body').append('<div class="'+cls+'"></div>');
             //分页 当创建 div时 就添加监听
-            $(".div_overflow").css({"overflow":"scroll"});
+            $(".div_overflow").css({"overflow":"scroll",'height':'340px'});
             $(".div_overflow").scroll(function() {
               var $this =$(this),
               viewH =$(this).height(),//可见高度
@@ -245,7 +249,7 @@ function fuwu() {
 		</div>
         <div class="vehicle_home">
             <a href="javascript:void(0);">
-                <div id="dianji_CityList">城市</div>
+                <span id="dianji_CityList">城市</span>
                 <span> <img src="city_qry.png"/> </span>
             </a>
         </div>
@@ -371,6 +375,8 @@ function fuwu() {
                 //遮盖层点击事件
                 function dd(){
                     $('.overlayCity').css('display','none');
+                    alert($('body').css('height'));
+                    $('.main_service_bottom').css('position','fixed');
                     $('input[id="cityChoice"]').blur();
                 
                 }
@@ -378,15 +384,7 @@ function fuwu() {
                 </script>
                 
                 </div>
-     
-	<!--	<div class="search-citys">
-			<input class="text" id="city_name" type="text"
-				placeholder="请输入城市中文或拼音 / 点击选择城市" oninput="X.city.keyup();"/>
-            <input class="text" id="hide_city_name" type="text" hidden="hidden"/>
-            <div class="search-text" id="citys" onClick="X.city.blur(city_id,getGoods);">
-                <ul></ul>
-            </div>
-		</div>  -->
+   
 	</div>
 </body>
 </html>

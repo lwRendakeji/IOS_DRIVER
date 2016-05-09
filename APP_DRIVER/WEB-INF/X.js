@@ -617,7 +617,7 @@ putDataIntoDiv:function(){
     //添加 数据装载
     if($('.'+cls).length <= 0){
       $('body').append('<div class="'+cls+'"></div>');
-        if(ROWNUMBER.length>0){
+       /* if(ROWNUMBER.length>0){
           if(X.cookie.get('iphoneversion')==6){
             $('.'+cls).css({'overflow':'scroll','height':'600px'});
           }
@@ -650,6 +650,7 @@ putDataIntoDiv:function(){
              }
           });//滚动事件结束
         }//判断是否有分页
+        */
     }
     //判断是否出现连接错误
     if(!X.isEmpty(result.success) && 'false' == result.success){
@@ -660,10 +661,10 @@ putDataIntoDiv:function(){
     }
     //用于清空数据(div中的数据)//一开始就会执行
     if(X.isEmpty(emptyFlag)){
-        //$('.'+cls).empty();
-        if(ROWNUMBER.length<=0){
+        $('.'+cls).empty();
+       /*if(ROWNUMBER.length<=0){
             $('.'+cls).empty();
-        }
+        }*/
     }
     //如果result不是一个Array,就将Array封装成一个Array,方便遍历
 	if(!result instanceof Array){
@@ -675,21 +676,22 @@ putDataIntoDiv:function(){
 	}
     //判断result是否为空
     if(result.length == 0){
-        alert(1);
+//        alert(1);
+     $('.'+cls).append('<div class="divTable" style="text-align:center">未找到任何数据</div>');
      $('.overlayX').css('display','none');
         
-     if(ROWNUMBER.length>0){
-         //LW 新添加的  用于分页 当没有数据的时候添加 提示
-         flag=true;//判断返回结果
-         if ($('#NoData').length <= 0) {
-          $('body').append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
-          }
-          setTimeout(function(){
-                     $('#NoData').remove();
-                     }, 5000);
-     }else{
-      $('.'+cls).append('<div class="divTable" style="text-align:center">未找到任何数据</div>');
-     }
+//     if(ROWNUMBER.length>0){
+//         //LW 新添加的  用于分页 当没有数据的时候添加 提示
+//         flag=true;//判断返回结果
+//         if ($('#NoData').length <= 0) {
+//          $('body').append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
+//          }
+//          setTimeout(function(){
+//                     $('#NoData').remove();
+//                     }, 5000);
+//     }else{
+      
+//     }
       return false;
     }
     //查找模板Div,以便填充数据

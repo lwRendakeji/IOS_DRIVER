@@ -39,7 +39,7 @@ function getToData(){
 function unpayedResult(jsonResult){
 //未付款查询
         result = jsonResult.result;
-        if(!X.html.putDataIntoDiv(result,{
+        if(shuju(result,{
           'input[name="score"]':function(e){
                   index = $(this).parent().parent().index();
                   clickflag = false;
@@ -116,7 +116,7 @@ function unpayedResult(jsonResult){
     }
     function payedResult(jsonResult){
         result = jsonResult.result;
-        if(!X.html.putDataIntoDiv(result,{'input[name="score"]':function(){
+        if(!shuju(result,{'input[name="score"]':function(){
                                   index = $(this).parent().parent().index();
                                   clickflag = false;
                                   if(X.isEmpty(result[index].SCORE1)){
@@ -303,6 +303,144 @@ function clickDetails_2(){
     X.soap(data,'FeeQueryService','getFeeQuery','payedResult');
     $('.overlayX').css('display','block');
 	}
+
+function shuju(){
+    var result,cls,emptyFlag,funcObj;
+    for(var i=0;i<arguments.length && i<4;i++){
+        switch(typeof arguments[i]){
+            case 'object':
+            //arguments  js自带的参数列表 保存的变量 ［］数组类型
+            if((arguments[i] instanceof Array) || !X.isEmpty(arguments[i].success)) result = arguments[i];
+            else funcObj = arguments[i];
+            break;
+            case 'string':
+            cls = arguments[i];
+            break;
+            case 'boolean':
+            emptyFlag = arguments[i];
+            break;
+        }
+    }
+    if(X.isEmpty(cls)) cls = 'detailBody';
+    //添加 数据装载
+    if($('.'+cls).length <= 0){
+        $('body').append('<div class="'+cls+'"></div>');
+        
+         if(X.cookie.get('iphoneversion')==6){
+         $('.'+cls).css({'overflow':'scroll','height':'400px'});
+         $('body').css('height','400px');
+         }
+         if(X.cookie.get('iphoneversion')==4){
+         $('.'+cls).css({'overflow':'scroll','height':'360px'});
+         $('body').css('height','260px');
+         }
+         if(X.cookie.get('iphoneversion')=='ipad'){
+         $('.'+cls).css({'overflow':'scroll','height':'900px'});
+         $('body').css('height','900px');
+         }
+         $('.'+cls).scroll(function() {
+         var $this =$(this),
+         viewH =$(this).height(),//可见高度
+         contentH =$(this).get(0).scrollHeight,//内容高度
+         scrollTop =$(this).scrollTop();//滚动高度
+         if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+         
+         if(!flag){
+         X.html.setOverlay();
+         if($('#NoData').length > 0){ $('#NoData').remove();    }
+         $('.'+cls).append('<div id="NoData" class="NoData" >数据加载中...</div>');
+         setTimeout(function(){
+         getToData();
+         $('#NoData').remove();
+         flag=false;
+         }, 2000);
+         flag=true;
+         return ;
+         }
+         
+         }
+         });//滚动事件结束
+         
+    }
+    //判断是否出现连接错误
+    if(!X.isEmpty(result.success) && 'false' == result.success){
+        $('.'+cls).empty();
+        $('.'+cls).append('<div class="divTable" style="text-align:center">'+result.msg+'</div>');
+        $('.overlayX').css('display','none');
+        return false;
+    }
+    //用于清空数据(div中的数据)//一开始就会执行
+    if(X.isEmpty(emptyFlag)){
+       // $('.'+cls).empty();
+    }
+    //如果result不是一个Array,就将Array封装成一个Array,方便遍历
+    if(!result instanceof Array){
+        if(X.getObjLenOrCompare(result, 0)){
+            var array = new Array();
+            array[0] = result;
+            result = array;
+        }
+    }
+    //判断result是否为空
+    if(result.length == 0){
+        
+        $('.overlayX').css('display','none');
+                 //LW 新添加的  用于分页 当没有数据的时候添加 提示
+            flag=true;//判断返回结果
+             if ($('#NoData').length <= 0) {
+              $('body').append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
+              }
+              setTimeout(function(){
+                         $('#NoData').remove();
+              }, 5000);
+          
+        return false;
+    }
+    //查找模板Div,以便填充数据
+    var divBody = $('.detailBodyModel').html();
+    if(X.isEmpty(divBody)){
+        X.dialog('未能获取有效的数据填充区域');
+        $('.overlayX').css('display','none');
+        return false;
+    }
+    //开始填充数据
+    $('.'+cls).each(function(){
+                    var div = $(this);
+                    //遍历数据
+                    for(var i=0;i<result.length;i++){
+                    if(!X.getObjLenOrCompare(result[i], 0)) continue;
+                    div.append(divBody);
+                    //遍历模板中的div
+                    $('.detailBodyModel div').each(function(){
+                                                   var clas = $(this).attr('class');
+                                                   if(X.isEmpty(clas) || clas.split(' ').length <= 1) return true;
+                                                   var value = result[i][clas.split(' ')[1]].replace('null','');
+                                                   //对TRS_ID或SO_ID截取
+                                                   if(clas.indexOf(' TRS_ID') >= 0 || clas.indexOf(' SO_ID') >= 0){
+                                                   value = result[i][clas.split(' ')[1]].substring(6);
+                                                   }
+                                                   //填充动作
+                                                   if($('.'+cls + ' .'+clas.replace(' ','.')+':last').find('span').length > 0){
+                                                   $('.'+cls + ' .'+clas.replace(' ','.')+':last').find('span').text(value);
+                                                   }else if($('.'+cls + ' .'+clas.replace(' ','.')+':last').find('strong').length > 0){
+                                                   $('.'+cls + ' .'+clas.replace(' ','.')+':last').find('strong').text(value);
+                                                   }else{
+                                                   $('.'+cls + ' .'+clas.replace(' ','.')+':last').html(value);
+                                                   }
+                                                   });
+                    }
+                    //添加 点击事件
+                    if(X.getObjLenOrCompare(funcObj,0)){
+                    for(var x in funcObj){
+                    $(x).click(funcObj[x]);
+                    }
+                    }
+                    });
+                    $('.overlayX').css('display','none');
+                    
+                    
+                    return true;
+}
 </script>
 </body>
 </html>
