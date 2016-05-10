@@ -346,16 +346,17 @@ function shuju(){
          if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
          
          if(!flag){
-         X.html.setOverlay();
-         if($('#NoData').length > 0){ $('#NoData').remove();    }
-         $('.'+cls).append('<div id="NoData" class="NoData" >数据加载中...</div>');
-         setTimeout(function(){
-         getToData();
-         $('#NoData').remove();
-         flag=false;
-         }, 2000);
-         flag=true;
-         return ;
+             X.html.setOverlay();
+             flag=true;
+             if($('#NoData').length > 0){ $('#NoData').remove();    }
+             $('.'+cls).append('<div id="NoData" class="NoData" >数据加载中...</div>');
+             setTimeout(function(){
+               getToData();
+               $('#NoData').remove();
+               flag=false;
+             }, 2000);
+             
+             return ;
          }
          
          }
