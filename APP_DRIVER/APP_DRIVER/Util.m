@@ -8,6 +8,7 @@
 
 #import "Util.h"
 #import "SystemConfiguration/SystemConfiguration.h"
+#import "Reachability.h"
 
 @implementation Util
 
@@ -40,7 +41,37 @@
 +(void) dialog:(NSString *)title msg:(NSString *)msg delegate:(id)delegate{
     [self dialog:title msg:msg delegate:delegate btnName:@"确定"];
 }
-
++(BOOL) isConnected{
+    Reachability *reach = [Reachability reachabilityWithHostName:@"www.apple.com"];
+    NetworkStatus status = [reach currentReachabilityStatus];
+    switch (status) {
+        case ReachableViaWiFi:
+        case ReachableViaWWAN:
+            return true;
+        case NotReachable:
+        default:
+            return false;
+    }
+    return false;
+}
++(void) writeToFile:(NSString *)fileName data:(NSMutableDictionary *)data{
+    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+                          stringByAppendingPathComponent:fileName];
+    //    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //if(![fileManager fileExistsAtPath:filePath]){
+    //创建新文件
+    //// [fileManager createFileAtPath:filePath contents:nil attributes:nil];
+    //}
+    [data writeToFile:filePath atomically:YES];
+}
++(NSMutableDictionary *) readFromFile:(NSString *)fileName{
+    NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+                          stringByAppendingPathComponent:fileName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSLog(@"filePath:%@",filePath);
+    if(![fileManager fileExistsAtPath:filePath]) return nil;
+    return [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+}
 /*-(void) uploadImage:(NSString *)url user_id:(NSString *)user_id index:(NSString *)index trs_id:(NSString *)trs_id role_id:(NSString *)role_id delegate:(nullable id)delegate imageData:(NSMutableDictionary *)imageData imageName:(NSMutableDictionary *)imageName{
     if([imageData count] == 0) return;
     //分界线的标示符

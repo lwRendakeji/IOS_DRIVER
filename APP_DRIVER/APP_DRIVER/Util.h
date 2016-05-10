@@ -21,6 +21,10 @@ NS_ASSUME_NONNULL_BEGIN //防止很多很多的编译警告,不影响实际运�
 
 +(void) dialog:(NSString *)title msg:(NSString *)msg delegate:(nullable id)delegate btnName:(NSString *)btnName;
 +(void) dialog:(NSString *)title msg:(NSString *)msg delegate:(nullable id)delegate;
+
++(BOOL) isConnected;        //判断是否开启了网络
++(void) writeToFile:(NSString *)fileName data:(NSMutableDictionary *)data;   //将数据保存到文件
++(NSMutableDictionary *) readFromFile:(NSString *)fileName;      //从文件读取数据
 //-(void) uploadImage:(NSString *)url user_id:(NSString *)user_id index:(NSString *)index trs_id:(NSString *)trs_id role_id:(NSString *)role_id delegate:(nullable id)delegate imageData:(NSMutableDictionary *)imageData imageName:(NSMutableDictionary *)imageName;
 
 NS_ASSUME_NONNULL_END
