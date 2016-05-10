@@ -17,7 +17,6 @@
 		525D12201C22885900837254 /* banner.png in Resources */ = {isa = PBXBuildFile; fileRef = 525D11241C22885900837254 /* banner.png */; };
 		525D12211C22885900837254 /* bg_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 525D11251C22885900837254 /* bg_transparent.png */; };
 		525D12221C22885900837254 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 525D11261C22885900837254 /* bg.png */; };
-		525D12231C22885900837254 /* bootstrap.js in Resources */ = {isa = PBXBuildFile; fileRef = 525D11271C22885900837254 /* bootstrap.js */; };
 		525D12241C22885900837254 /* btn_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 525D11281C22885900837254 /* btn_bg.png */; };
 		525D12251C22885900837254 /* btn_set.png in Resources */ = {isa = PBXBuildFile; fileRef = 525D11291C22885900837254 /* btn_set.png */; };
 		525D12261C22885900837254 /* caozuoshuoming.css in Resources */ = {isa = PBXBuildFile; fileRef = 525D112A1C22885900837254 /* caozuoshuoming.css */; };
@@ -273,12 +272,11 @@
 		52F67B1E1C3A556C0032EFDF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F67B1D1C3A556C0032EFDF /* MapKit.framework */; };
 		52F973051CE1DC500022350B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F973041CE1DC500022350B /* Reachability.m */; };
 		52FE95F11C30C7FD00E84235 /* tel_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FE95F01C30C7FD00E84235 /* tel_1.png */; };
-		8E0133BD1CDDB219004B509B /* hzw-city-picker.css in Resources */ = {isa = PBXBuildFile; fileRef = 8E0133BC1CDDB219004B509B /* hzw-city-picker.css */; };
 		8E0133BF1CDDB257004B509B /* city-data.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E0133BE1CDDB257004B509B /* city-data.js */; };
 		8E0133C11CDDB26A004B509B /* hzw-city-picker.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E0133C01CDDB26A004B509B /* hzw-city-picker.min.js */; };
 		8E0133C31CDDB27C004B509B /* jquery-2.1.3.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E0133C21CDDB27C004B509B /* jquery-2.1.3.min.js */; };
 		8E6EC63E1C3273CB0045A0C2 /* start_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E6EC63D1C3273CB0045A0C2 /* start_4.png */; };
-		8EEC52A61C3283A000B1046E /* cities_1.js in Resources */ = {isa = PBXBuildFile; fileRef = 8EEC52A51C3283A000B1046E /* cities_1.js */; };
+		8E9772951CE06340006B928A /* hzw-city-picker.css in Resources */ = {isa = PBXBuildFile; fileRef = 8E9772941CE06340006B928A /* hzw-city-picker.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -296,7 +294,6 @@
 		525D11241C22885900837254 /* banner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = banner.png; path = "WEB-INF/banner.png"; sourceTree = "<group>"; };
 		525D11251C22885900837254 /* bg_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg_transparent.png; path = "WEB-INF/bg_transparent.png"; sourceTree = "<group>"; };
 		525D11261C22885900837254 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bg.png; path = "WEB-INF/bg.png"; sourceTree = "<group>"; };
-		525D11271C22885900837254 /* bootstrap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bootstrap.js; path = "WEB-INF/bootstrap.js"; sourceTree = "<group>"; };
 		525D11281C22885900837254 /* btn_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_bg.png; path = "WEB-INF/btn_bg.png"; sourceTree = "<group>"; };
 		525D11291C22885900837254 /* btn_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btn_set.png; path = "WEB-INF/btn_set.png"; sourceTree = "<group>"; };
 		525D112A1C22885900837254 /* caozuoshuoming.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = caozuoshuoming.css; path = "WEB-INF/caozuoshuoming.css"; sourceTree = "<group>"; };
@@ -565,12 +562,11 @@
 		52F973031CE1DC440022350B /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		52F973041CE1DC500022350B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		52FE95F01C30C7FD00E84235 /* tel_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tel_1.png; path = "WEB-INF/tel_1.png"; sourceTree = "<group>"; };
-		8E0133BC1CDDB219004B509B /* hzw-city-picker.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "hzw-city-picker.css"; path = "WEB-INF/hzw-city-picker.css"; sourceTree = "<group>"; };
 		8E0133BE1CDDB257004B509B /* city-data.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "city-data.js"; path = "WEB-INF/city-data.js"; sourceTree = "<group>"; };
 		8E0133C01CDDB26A004B509B /* hzw-city-picker.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "hzw-city-picker.min.js"; path = "WEB-INF/hzw-city-picker.min.js"; sourceTree = "<group>"; };
 		8E0133C21CDDB27C004B509B /* jquery-2.1.3.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "jquery-2.1.3.min.js"; path = "WEB-INF/jquery-2.1.3.min.js"; sourceTree = "<group>"; };
 		8E6EC63D1C3273CB0045A0C2 /* start_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = start_4.png; path = "WEB-INF/start_4.png"; sourceTree = "<group>"; };
-		8EEC52A51C3283A000B1046E /* cities_1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cities_1.js; path = "WEB-INF/cities_1.js"; sourceTree = "<group>"; };
+		8E9772941CE06340006B928A /* hzw-city-picker.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "hzw-city-picker.css"; path = "WEB-INF/hzw-city-picker.css"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -696,24 +692,24 @@
 				525D11851C22885900837254 /* loadlist.html */,
 				525D11731C22885900837254 /* Invitation.html */,
 				525D118C1C22885900837254 /* login.html */,
+				525D11AD1C22885900837254 /* OrderList.html */,
 				525D11981C22885900837254 /* main_Service.html */,
 				525D119C1C22885900837254 /* main.html */,
-				525D119F1C22885900837254 /* message.html */,
 				525D11A41C22885900837254 /* NetList.html */,
 				525D11A61C22885900837254 /* Network.html */,
 				525D11A81C22885900837254 /* NoticeDetail.html */,
 				525D11AB1C22885900837254 /* OilStation.html */,
-				525D11AD1C22885900837254 /* OrderList.html */,
 				525D11AF1C22885900837254 /* PayList_in.html */,
 				525D11B11C22885900837254 /* PayList.html */,
+				525D119F1C22885900837254 /* message.html */,
 				525D11CC1C22885900837254 /* Regedit.html */,
 				525D11CE1C22885900837254 /* RepairStation.html */,
 				525D11D21C22885900837254 /* roadCondition.html */,
-				525D11D41C22885900837254 /* RoadPublish.html */,
 				525D11EC1C22885900837254 /* scoreView.html */,
 				525D11FC1C22885900837254 /* SignConfirm.html */,
-				525D12021C22885900837254 /* startView.html */,
 				525D12121C22885900837254 /* Trainno_in.html */,
+				525D12021C22885900837254 /* startView.html */,
+				525D11D41C22885900837254 /* RoadPublish.html */,
 				525D12141C22885900837254 /* Trainno.html */,
 				525D12181C22885900837254 /* yingyongfuwushezhi.html */,
 			);
@@ -723,16 +719,14 @@
 		52A2E85F1C17C3BE0056F305 /* js */ = {
 			isa = PBXGroup;
 			children = (
-				525D11271C22885900837254 /* bootstrap.js */,
-				525D112C1C22885900837254 /* cities.js */,
 				525D115F1C22885900837254 /* GUOLI_main.js */,
+				525D112C1C22885900837254 /* cities.js */,
 				8E0133C01CDDB26A004B509B /* hzw-city-picker.min.js */,
 				525D11741C22885900837254 /* iscroll.js */,
 				8E0133BE1CDDB257004B509B /* city-data.js */,
 				525D11751C22885900837254 /* jquery-1.8.3.min.js */,
 				525D11771C22885900837254 /* jquery-2.1.0.js */,
 				525D11781C22885900837254 /* jquery.autocomplete.js */,
-				8EEC52A51C3283A000B1046E /* cities_1.js */,
 				525D11791C22885900837254 /* jquery.event.drag-1.5.min.js */,
 				8E0133C21CDDB27C004B509B /* jquery-2.1.3.min.js */,
 				525D117D1C22885900837254 /* jquery.touchSlider.js */,
@@ -751,12 +745,12 @@
 				525D11341C22885900837254 /* ComplainList.css */,
 				525D11421C22885900837254 /* Evaluate.css */,
 				525D11441C22885900837254 /* EvaluateScore.css */,
-				8E0133BC1CDDB219004B509B /* hzw-city-picker.css */,
 				525D11481C22885900837254 /* Fee_Score.css */,
 				525D114B1C22885900837254 /* FeeQuery_in.css */,
 				525D114D1C22885900837254 /* FeeQuery.css */,
 				525D114F1C22885900837254 /* FindKeyActivity.css */,
 				525D11511C22885900837254 /* FoodStation.css */,
+				8E9772941CE06340006B928A /* hzw-city-picker.css */,
 				525D11531C22885900837254 /* GLShop.css */,
 				525D11561C22885900837254 /* GoodsFirm.css */,
 				525D11591C22885900837254 /* guanyuguoli.css */,
@@ -1051,7 +1045,6 @@
 				525D129C1C22885900837254 /* middle_checked.png in Resources */,
 				525D12C31C22885900837254 /* point_on.png in Resources */,
 				525D12AC1C22885900837254 /* PayList.css in Resources */,
-				8E0133BD1CDDB219004B509B /* hzw-city-picker.css in Resources */,
 				525D122A1C22885900837254 /* CityList.css in Resources */,
 				525D12E51C22885900837254 /* score_goods4_selected.png in Resources */,
 				8E0133C11CDDB26A004B509B /* hzw-city-picker.min.js in Resources */,
@@ -1075,12 +1068,10 @@
 				525D12B91C22885900837254 /* plugin_camera_del_unfocused.png in Resources */,
 				525D123E1C22885900837254 /* Evaluate.css in Resources */,
 				525D12201C22885900837254 /* banner.png in Resources */,
-				8EEC52A61C3283A000B1046E /* cities_1.js in Resources */,
 				525D121E1C22885900837254 /* arrow.png in Resources */,
 				525D12311C22885900837254 /* complainList.html in Resources */,
 				525D128B1C22885900837254 /* logo2.png in Resources */,
 				525D12E91C22885900837254 /* search_bg.9.png in Resources */,
-				525D12231C22885900837254 /* bootstrap.js in Resources */,
 				525D12CA1C22885900837254 /* RepairStation.html in Resources */,
 				525D13021C22885900837254 /* tab_find_frd_normal.png in Resources */,
 				525D123D1C22885900837254 /* empty.png in Resources */,
@@ -1138,6 +1129,7 @@
 				525D129B1C22885900837254 /* message.html in Resources */,
 				525D13101C22885900837254 /* Trainno.html in Resources */,
 				525D121A1C22885900837254 /* aboutgl.png in Resources */,
+				8E9772951CE06340006B928A /* hzw-city-picker.css in Resources */,
 				525D12F41C22885900837254 /* sett_set.png in Resources */,
 				525D12F71C22885900837254 /* SignConfirm.css in Resources */,
 				525D12ED1C22885900837254 /* service2.png in Resources */,

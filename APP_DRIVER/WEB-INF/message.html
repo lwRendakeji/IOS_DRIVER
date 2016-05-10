@@ -24,9 +24,9 @@
         if(result.length>0){
             for(var x in result){
                 if(!X.getObjLenOrCompare(result[x],0)) continue;
-                $('.table').append('<tr><td><img src="arrow_next.png"/></td><td id="NOTICE_DATE"></td><td id="NOTICE_TITLE"></td></tr>');
-                $('#NOTICE_DATE:last').text(result[x].NOTICE_DATE);
-                $('#NOTICE_TITLE:last').text(result[x].NOTICE_TITLE);
+                $('.table').append('<tr><td><img src="arrow_next.png"/></td><td class="NOTICE_DATE"></td><td class="NOTICE_TITLE"></td></tr>');
+                $('.NOTICE_DATE:last').text(result[x].NOTICE_DATE);
+                $('.NOTICE_TITLE:last').text(result[x].NOTICE_TITLE);
             }
             $('.table tr').click(function(){
                                        window.location.href = X.html.setInputs(result[$(this).index()],'NoticeDetail.html');
