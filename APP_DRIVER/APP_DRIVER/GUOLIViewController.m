@@ -31,6 +31,7 @@
 @property (strong,nonatomic) NSString *scaleSize;
 @property (strong,nonatomic) NSArray *latlngArr;
 @property int picIndex;
+@property BOOL isBackground;    //app当前是否在后台    xwb 2016-05-09
 @end
 
 @implementation GUOLIViewController
@@ -72,6 +73,7 @@
     __block NSString *iphoneVersion;
     __block CGRect rect;
     dispatch_once(&onceToken, ^{
+        self.isBackground = false;
         self.webservice_id = [WEBSERVICE_ID substringFromIndex:0];
         self.webservice_name = [WEBSERVICE_NAME substringFromIndex:0];
         self.webservice_port = [WEBSERVICE_PORT substringFromIndex:0];
@@ -169,38 +171,60 @@
     
     //定位代码
     [self getLocation];
+    
+    //注册app进入后台和进入前台的事件 xwb 2016-05-09
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
+//监听home键,app进去后台   xwb 2016-05-09
+-(void) applicationWillResignActive:(NSNotification *)notification{
+    self.isBackground = true;
+    printf("background");
+}
+//监听app返回前台 xwb 2016-05-09
+-(void) applicationDidBecomeActive:(NSNotification *)notification{
+    self.isBackground = false;
+    printf("BecomeActive");
+}
 -(void) getLocation{
     //判断定位操作是否被允许
-    if ([CLLocationManager locationServicesEnabled]) {
-        //开始定位用户的位置
-        //         [self.locationManager startUpdatingLocation];
-        [self.locationManager startMonitoringSignificantLocationChanges];
-        //每隔多少米定位一次（这里的设置为任何的移动）
-        //self.locationManager.distanceFilter=kCLDistanceFilterNone;
-        //设置定位的精准度，一般精准度越高，越耗电（这里设置为精准度最高的，适用于导航应用）
-        self.locationManager.desiredAccuracy=kCLLocationAccuracyBestForNavigation;
-        self.locationManager.pausesLocationUpdatesAutomatically = NO;   //该模式是抵抗程序在后台被杀，申明不能够被暂停
-    }
+//    if ([CLLocationManager locationServicesEnabled]) {
+//        //开始定位用户的位置
+//        //         [self.locationManager startUpdatingLocation];
+//        [self.locationManager startMonitoringSignificantLocationChanges];
+//        //每隔多少米定位一次（这里的设置为任何的移动）
+//        self.locationManager.distanceFilter=kCLDistanceFilterNone;
+//        //设置定位的精准度，一般精准度越高，越耗电（这里设置为精准度最高的，适用于导航应用）
+//        //self.locationManager.desiredAccuracy=kCLLocationAccuracyBestForNavigation;
+//        self.locationManager.pausesLocationUpdatesAutomatically = NO;   //该模式是抵抗程序在后台被杀，申明不能够被暂停
+//    }
     
     
-    //    if([CLLocationManager locationServicesEnabled]){
-    //        NSLog(@"使用系统定位");
-    //        _locationManager = [[CLLocationManager alloc] init];
-    //        _locationManager.delegate = self;//代理
-    ////        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//定位精确度
-    ////        _locationManager.distanceFilter = 1.0f;//每隔1000米 更新一次信息
-    //        //[_locationManager startUpdatingLocation];//标准定位
-    //        _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
-    //        _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
-    //        [_locationManager startMonitoringSignificantLocationChanges];//基站定位
-    //    }else{
-    //        //提示用户无法进行定位操作
-    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认开启定位功能" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    //        [alertView show];
-    //    }
+        if([CLLocationManager locationServicesEnabled]){
+            NSLog(@"使用系统定位");
+            _locationManager = [[CLLocationManager alloc] init];
+            _locationManager.delegate = self;//代理
+            _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//定位精确度
+            _locationManager.distanceFilter = 1.0f;//每隔1000米 更新一次信息
+            
+            _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
+            _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
+            [_locationManager requestWhenInUseAuthorization];   //ios8.0之后，需要主动申请定位授权   xwb 2016-05-09
+            [_locationManager startUpdatingLocation];//标准定位
+            //[_locationManager startMonitoringSignificantLocationChanges];//基站定位
+        }else{
+            //提示用户无法进行定位操作
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认开启定位功能" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alertView show];
+        }
+    
+    //Starting the significant-change location service
+//    if(nil == _locationManager) _locationManager = [[CLLocationManager alloc] init];
+//    _locationManager.delegate = self;
+//    [_locationManager startMonitoringSignificantLocationChanges];
 }
+
 
 //页面不上划
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
@@ -276,14 +300,13 @@
             NSCalendar *calendar = [NSCalendar currentCalendar];
             unsigned int unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
             NSDateComponents *d = [calendar components:unitFlags fromDate:date];
-            if(lastLocateTime == nil || [@"" isEqualToString:lastLocateTime] || labs([[[lastLocateTime componentsSeparatedByString:@":"] objectAtIndex:0] intValue] - [d hour]) >= 2){
+            RendaKeychain *keyChain = [[RendaKeychain alloc] init];
+            [keyChain initWithKeys];
+            //增加了判断app_id是否为空,为空,则不向服务器发送位置信息
+            if([keyChain load:keyChain.KEY_USERNAME] != nil && (lastLocateTime == nil || [@"" isEqualToString:lastLocateTime] || labs([[[lastLocateTime componentsSeparatedByString:@":"] objectAtIndex:0] intValue] - [d hour]) >= 2)){
                 NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-               
-                RendaKeychain *keyChain = [[RendaKeychain alloc] init];
-                [keyChain initWithKeys];
                  NSLog(@"APP_ID: %@",[keyChain load:keyChain.KEY_USERNAME] );
                 [dictionary setObject:[keyChain load:keyChain.KEY_USERNAME] forKey:@"APP_ID"];
-                
                 [dictionary setObject:placemark.name forKey:@"ADDRESS"];
                 [dictionary setObject:placemark.locality forKey:@"CITY"];
                 [dictionary setObject:txtLat forKey:@"LAT"];

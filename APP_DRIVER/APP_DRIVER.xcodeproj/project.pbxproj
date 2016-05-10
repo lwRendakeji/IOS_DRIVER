@@ -556,8 +556,6 @@
 		52F67AF21C3A16A00032EFDF /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		52F67AF41C3A16AA0032EFDF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		52F67AF61C3A16B40032EFDF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		52F67AFC1C3A17030032EFDF /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		52F67AFE1C3A183B0032EFDF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		52F67B001C3A18500032EFDF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		52F67B1D1C3A556C0032EFDF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		52FE95F01C30C7FD00E84235 /* tel_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tel_1.png; path = "WEB-INF/tel_1.png"; sourceTree = "<group>"; };
@@ -618,8 +616,6 @@
 			children = (
 				52F67B1D1C3A556C0032EFDF /* MapKit.framework */,
 				52F67B001C3A18500032EFDF /* ImageIO.framework */,
-				52F67AFE1C3A183B0032EFDF /* CoreMotion.framework */,
-				52F67AFC1C3A17030032EFDF /* CoreTelephony.framework */,
 				52F67AF61C3A16B40032EFDF /* AVFoundation.framework */,
 				52F67AF41C3A16AA0032EFDF /* SystemConfiguration.framework */,
 				52F67AF21C3A16A00032EFDF /* libstdc++.6.0.9.tbd */,
@@ -982,7 +978,7 @@
 				ORGANIZATIONNAME = renda;
 				TargetAttributes = {
 					52A2E8371C17C3AC0056F305 = {
-						DevelopmentTeam = 4AU2X8LTD6;
+						DevelopmentTeam = EEZU3TQPPS;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1340,7 +1336,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0708ae47-f480-48e1-875a-56c98f0725f2";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1366,7 +1361,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "0708ae47-f480-48e1-875a-56c98f0725f2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1394,7 +1388,7 @@
 					"-W",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = appDriver;
+				PRODUCT_BUNDLE_IDENTIFIER = driverApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1425,7 +1419,7 @@
 					"-W",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = appDriver;
+				PRODUCT_BUNDLE_IDENTIFIER = driverApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -21,7 +21,6 @@ NS_ASSUME_NONNULL_BEGIN //防止很多很多的编译警告,不影响实际运�
 
 +(void) dialog:(NSString *)title msg:(NSString *)msg delegate:(nullable id)delegate btnName:(NSString *)btnName;
 +(void) dialog:(NSString *)title msg:(NSString *)msg delegate:(nullable id)delegate;
-
 //-(void) uploadImage:(NSString *)url user_id:(NSString *)user_id index:(NSString *)index trs_id:(NSString *)trs_id role_id:(NSString *)role_id delegate:(nullable id)delegate imageData:(NSMutableDictionary *)imageData imageName:(NSMutableDictionary *)imageName;
 
 NS_ASSUME_NONNULL_END

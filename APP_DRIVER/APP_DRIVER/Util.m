@@ -7,6 +7,7 @@
 //
 
 #import "Util.h"
+#import "SystemConfiguration/SystemConfiguration.h"
 
 @implementation Util
 
