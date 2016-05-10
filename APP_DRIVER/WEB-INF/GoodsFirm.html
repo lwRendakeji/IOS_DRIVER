@@ -141,11 +141,16 @@ function resultList(jsonResult) {
               if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
                 if(!flag){
                   X.html.setOverlay();
+                  flag=true;
                   setTimeout(function(){
+                    
                     var las_number = Number(ROWNUMBER) + Number(num);
                     ROWNUMBER=las_number;
                     getGoods2(ROWNUMBER);
-                  }, 1000);
+                    flag=false;
+                  }, 2000);
+                 
+                                      
                 }
                   
                }
