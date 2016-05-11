@@ -285,13 +285,16 @@ function shuju(){
         $('.overlayX').css('display','none');
         //LW 新添加的  用于分页 当没有数据的时候添加 提示
         flag=true;//判断返回结果
-        if ($('#NoData').length <= 0) {
+        /*if ($('#NoData').length <= 0) {
             $('body').append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
         }
         setTimeout(function(){
                    $('#NoData').remove();
-                   }, 2000);
-                   
+                   }, 2000);*/
+        $('.table').append('<tr><td colspan="2" style="background-color:#FFF;font-size:14px; text-align:center;">没有更多的资讯了...</td></tr>');
+        setTimeout(function(){
+                   $('.table').find("tr:last").remove();
+                   },5000);
                    return false;
     }
     //查找模板Div,以便填充数据
