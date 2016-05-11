@@ -20,7 +20,7 @@
 }
 //插入key-value值
 -(void)setUserInfo:(NSString *)key value:(NSString *)value{
-    NSLog(@"serUserInfo,%@:%@",key,value);
+//    NSLog(@"serUserInfo,%@:%@",key,value);
     NSUserDefaults *tmpUser = [self getUser];
     key = [key uppercaseString];
     [tmpUser setObject:value forKey:key];

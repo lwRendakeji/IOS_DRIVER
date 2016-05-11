@@ -35,6 +35,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>开启定位服务</string>
+	<key>UIBackgroundModes</key>
+	<array/>
 	<key>UILaunchImageFile</key>
 	<string>Default</string>
 	<key>UIRequiredDeviceCapabilities</key>
