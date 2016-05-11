@@ -9,7 +9,7 @@
 <script type="text/javascript" src="jquery-2.1.0.js"></script>
 <script type="text/javascript" src="X.js"></script>
 <script>
-    var result;
+    var _result;
     $(function(){
       clickDetails_1();
       });
@@ -53,6 +53,7 @@
         data.USER_ID = X.cookie.get('username');
         X.html.setOverlay();
         X.soap(data,'ApnNotifyService','getApnNotify');
+        //getNotice();
     }
     function resultList(jsonResult){
         X.html.putDataIntoDiv(jsonResult.result);

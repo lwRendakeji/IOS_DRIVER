@@ -81,7 +81,7 @@
         struct utsname systemInfo;
         uname(&systemInfo);
         NSString *deviceString = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-        NSLog(@"deviceString:%@",deviceString);
+//        NSLog(@"deviceString:%@",deviceString);
         User *user = [[User alloc] init];
         if(deviceString == nil || [deviceString rangeOfString:@"iPhone"].location != NSNotFound){
             if(deviceString == nil || [deviceString rangeOfString:@"iPhone3"].location != NSNotFound || [deviceString rangeOfString:@"iPhone4"].location != NSNotFound){
@@ -112,10 +112,10 @@
         CGSize size = rect.size;
         CGFloat width = size.width;
         CGFloat height = size.height;
-        NSLog(@"width:%f,height:%f",width,height);
+//        NSLog(@"width:%f,height:%f",width,height);
         //分辨率
         CGFloat scale_screen = [UIScreen mainScreen].scale;
-        NSLog(@"scale:%f,%f",width*scale_screen,height*scale_screen);
+//        NSLog(@"scale:%f,%f",width*scale_screen,height*scale_screen);
         [user setUserInfo:@"width" value:[NSString stringWithFormat:@"%f",width]];
         [user setUserInfo:@"height" value:[NSString stringWithFormat:@"%f",height]];
         [user setUserInfo:@"scale" value:[NSString stringWithFormat:@"%f",scale_screen]];
@@ -154,12 +154,12 @@
     NSString *htmlView = [[NSString alloc] init];
     //判断是否第一次使用
     User *user = [[User alloc] init];
-    NSLog(@"firstinstall:%@",[user getUserInfo:@"firstinstall"]);
+//    NSLog(@"firstinstall:%@",[user getUserInfo:@"firstinstall"]);
     if([user getUserInfo:@"FIRSTINSTALL"] == nil || [@"" isEqualToString:[user getUserInfo:@"firstinstall"]] || [@"true" isEqualToString:[user getUserInfo:@"FIRSTINSTALL"]]){
-        NSLog(@"guideView");
+//        NSLog(@"guideView");
         htmlView = @"guideView";
     }else{
-        NSLog(@"startView");
+//        NSLog(@"startView");
         htmlView = @"startView";
     }
     NSString *htmlPath = [[NSBundle mainBundle] pathForResource:htmlView ofType:@"html"];
@@ -170,7 +170,14 @@
     //[webView loadRequest:request];
     
     //定位代码
-    [self getLocation];
+    if(_locationManager == nil) _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;//代理
+    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//定位精确度
+    //_locationManager.distanceFilter = 5000.0f;//每隔1000米 更新一次信息
+    
+    _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
+    _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
+    if([Util getVersion] >= 8.0) [_locationManager requestWhenInUseAuthorization];   //ios8.0之后，需要主动申请定位授权   xwb 2016-05-09
     
     //注册app进入后台和进入前台的事件 xwb 2016-05-09
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
@@ -182,59 +189,31 @@
     self.isBackground = true;
     printf("background");
 }
-//监听app返回前台 xwb 2016-05-09
+//监听app返回前台 xwb 2016-05-09      当程序开始运行的时候,也会调用该方法
 -(void) applicationDidBecomeActive:(NSNotification *)notification{
     self.isBackground = false;
-    User *user = [[User alloc] init];
-    if([user getUserInfo:@"la_t"] != nil && ![@"" isEqualToString:[user getUserInfo:@"la_t"]] && [Util isConnected]){
-        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-        [dictionary setObject:[user getUserInfo:@"username"] forKey:@"APP_ID"];
-        [dictionary setObject:[user getUserInfo:@"a_t"] forKey:@"ADDRESS"];
-        [dictionary setObject:[user getUserInfo:@"c_t"] forKey:@"CITY"];
-        [dictionary setObject:[user getUserInfo:@"la_t"] forKey:@"LAT"];
-        [dictionary setObject:[user getUserInfo:@"ln_t"] forKey:@"LNG"];
-        [dictionary setObject:[user getUserInfo:@"m_t"] forKey:@"MSG"];
-        self.callMethod = @"offLineLocate";
-        [self soap:@"LogService" methodName:@"baiduMapLog" fields:[Util transDictionaryToSoapMessage:dictionary]];
-    }
+    [self getLocation:false];       //非强制定位
     printf("BecomeActive");
 }
--(void) getLocation{
-    //判断定位操作是否被允许
-//    if ([CLLocationManager locationServicesEnabled]) {
-//        //开始定位用户的位置
-//        //         [self.locationManager startUpdatingLocation];
-//        [self.locationManager startMonitoringSignificantLocationChanges];
-//        //每隔多少米定位一次（这里的设置为任何的移动）
-//        self.locationManager.distanceFilter=kCLDistanceFilterNone;
-//        //设置定位的精准度，一般精准度越高，越耗电（这里设置为精准度最高的，适用于导航应用）
-//        //self.locationManager.desiredAccuracy=kCLLocationAccuracyBestForNavigation;
-//        self.locationManager.pausesLocationUpdatesAutomatically = NO;   //该模式是抵抗程序在后台被杀，申明不能够被暂停
-//    }
-    
-    
-        if([CLLocationManager locationServicesEnabled]){
-            NSLog(@"使用系统定位");
-            _locationManager = [[CLLocationManager alloc] init];
-            _locationManager.delegate = self;//代理
-            _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//定位精确度
-            _locationManager.distanceFilter = 1.0f;//每隔1000米 更新一次信息
-            
-            _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
-            _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
-            [_locationManager requestWhenInUseAuthorization];   //ios8.0之后，需要主动申请定位授权   xwb 2016-05-09
-            [_locationManager startUpdatingLocation];//标准定位
-            //[_locationManager startMonitoringSignificantLocationChanges];//基站定位
-        }else{
-            //提示用户无法进行定位操作
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请确认开启定位功能" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            [alertView show];
-        }
-    
-    //Starting the significant-change location service
-//    if(nil == _locationManager) _locationManager = [[CLLocationManager alloc] init];
-//    _locationManager.delegate = self;
-//    [_locationManager startMonitoringSignificantLocationChanges];
+
+-(void) getLocation:(BOOL) isLocate{
+    User *user = [[User alloc] init];
+    NSString *lastLocateTime = [user getUserInfo:@"lastLocateTime"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+    NSDate *date = [dateFormatter dateFromString:lastLocateTime];
+    NSTimeInterval time = [date timeIntervalSinceNow];
+    //如果定位空能可用,或者是第一次运行程序,或者两次定位间隔相差30分钟,或者强制定位isLocate == true,开启定位
+    if([CLLocationManager locationServicesEnabled]){
+        if(lastLocateTime == nil || [@"" isEqualToString:lastLocateTime] || abs((int)time/60) > 30 || isLocate)
+            [_locationManager startUpdatingLocation];
+    }else{
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+        User *user = [[User alloc] init];
+        [dictionary setObject:[user getUserInfo:@"username"] forKey:@"APP_ID"];
+        [dictionary setObject:@"IOS客户端:定位服务不可用" forKey:@"MSG"];
+        [self soap:@"LogService" methodName:@"baiduMapLog" fields:[Util transDictionaryToSoapMessage:dictionary]];
+    }
 }
 
 
@@ -260,15 +239,13 @@
 //定位成功
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
 
-    
-    NSLog(@"定位成功");
+    [_locationManager stopUpdatingLocation];
+//    NSLog(@"定位成功");
     CLLocation *currLocation = [locations lastObject];
     txtLat = [NSString stringWithFormat:@"%3.16f",currLocation.coordinate.latitude];
     txtLng = [NSString stringWithFormat:@"%3.16f",currLocation.coordinate.longitude];
     txtAlt = [NSString stringWithFormat:@"%3.16f",currLocation.altitude];
-    NSLog(@"lat:%@;lng:%@",txtLat,txtLng);
-    
-    
+//    NSLog(@"lat:%@;lng:%@",txtLat,txtLng);
     
     //获取当前所在城市名
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
@@ -299,80 +276,38 @@
 
             //设定城市
             [user setUserInfo:@"cityname" value:city];
-            if(self.isBackground){
-                //如果程序是在后台,则将定位信息保存在user中
-                User *user = [[User alloc] init];
-                NSString *a_t = [user getUserInfo:@"a_t"];
-                if(a_t == nil || [@"" isEqualToString:a_t]) a_t = placemark.name;
-                else a_t = [a_t stringByAppendingFormat:@";%@",placemark.name];
-                [user setUserInfo:@"a_t" value:a_t];
-                
-                NSString *c_t = [user getUserInfo:@"c_t"];
-                if(c_t == nil || [@"" isEqualToString:c_t]) c_t = placemark.locality;
-                else c_t = [c_t stringByAppendingFormat:@",%@",placemark.locality];
-                [user setUserInfo:@"c_t" value:c_t];
-                
-                NSString *la_t = [user getUserInfo:@"la_t"];
-                if(la_t == nil || [@"" isEqualToString:la_t]) la_t =txtLat;
-                else la_t = [la_t stringByAppendingFormat:@",%@",txtLat];
-                [user setUserInfo:@"la_t" value:la_t];
-                
-                NSString *ln_t = [user getUserInfo:@"ln_t"];
-                if(ln_t == nil || [@"" isEqualToString:ln_t]) ln_t = txtLng;
-                else ln_t = [ln_t stringByAppendingFormat:@",%@",txtLng];
-                [user setUserInfo:@"ln_t" value:ln_t];
-                
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-                NSString *locationString = [dateFormatter stringFromDate:[NSDate date]];
-                NSString *m_t = [user getUserInfo:@"m_t"];
-                if(m_t == nil || [@"" isEqualToString:m_t]) m_t = locationString;
-                else m_t = [m_t stringByAppendingFormat:@",%@",locationString];
-                [user setUserInfo:@"m_t" value:m_t];
-            }else{
-                //判断是否将定为信息保存到服务器
-                NSString *username = [user getUserInfo:@"username"];
-                NSString *lastLocateTime = [user getUserInfo:[NSString stringWithFormat:@"%@_locatetime",username]];
-                NSDate *date = [NSDate date];
-                NSCalendar *calendar = [NSCalendar currentCalendar];
-                unsigned int unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
-                NSDateComponents *d = [calendar components:unitFlags fromDate:date];
-                RendaKeychain *keyChain = [[RendaKeychain alloc] init];
-                [keyChain initWithKeys];
-                //增加了判断app_id是否为空,为空,则不向服务器发送位置信息
-                if([keyChain load:keyChain.KEY_USERNAME] != nil && (lastLocateTime == nil || [@"" isEqualToString:lastLocateTime] || labs([[[lastLocateTime componentsSeparatedByString:@":"] objectAtIndex:0] intValue] - [d hour]) >= 2)){
-                    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-                    NSLog(@"APP_ID: %@",[keyChain load:keyChain.KEY_USERNAME] );
-                    [dictionary setObject:[keyChain load:keyChain.KEY_USERNAME] forKey:@"APP_ID"];
-                    [dictionary setObject:placemark.name forKey:@"ADDRESS"];
-                    [dictionary setObject:placemark.locality forKey:@"CITY"];
-                    [dictionary setObject:txtLat forKey:@"LAT"];
-                    [dictionary setObject:txtLng forKey:@"LNG"];
-                    [user setUserInfo:@"lat" value:txtLat];
-                    [user setUserInfo:@"lng" value:txtLng];
-                    [user setUserInfo:@"address" value:placemark.name];
-                    //如果 经纬度更换 则上传地址  因为是基站定位   是在更换基站的时候更新
-//                    if(![txtLat isEqualToString:txtLat_old]&&![txtLng isEqualToString:txtLng_old ]){
-                    [self soap:@"LogService" methodName:@"baiduMapLog" fields:[Util transDictionaryToSoapMessage:dictionary]];
-//                    }
-                }
+            //判断是否将定为信息保存到服务器
+            RendaKeychain *keyChain = [[RendaKeychain alloc] init];
+            [keyChain initWithKeys];
+            //增加了判断app_id是否为空,为空,则不向服务器发送位置信息
+            if([keyChain load:keyChain.KEY_USERNAME] != nil && txtLat > 0 && txtLng > 0){
+                NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+//                NSLog(@"APP_ID: %@",[keyChain load:keyChain.KEY_USERNAME] );
+                [dictionary setObject:[keyChain load:keyChain.KEY_USERNAME] forKey:@"APP_ID"];
+                [dictionary setObject:placemark.name forKey:@"ADDRESS"];
+                [dictionary setObject:placemark.locality forKey:@"CITY"];
+                [dictionary setObject:txtLat forKey:@"LAT"];
+                [dictionary setObject:txtLng forKey:@"LNG"];
+                [user setUserInfo:@"lat" value:txtLat];
+                [user setUserInfo:@"lng" value:txtLng];
+                [user setUserInfo:@"address" value:placemark.name];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+                [user setUserInfo:@"lastLocateTime" value:[formatter stringFromDate:[NSDate date]]];
+                //如果 经纬度更换 则上传地址  因为是基站定位   是在更换基站的时候更新
+                [self soap:@"LogService" methodName:@"baiduMapLog" fields:[Util transDictionaryToSoapMessage:dictionary]];
             }
-            NSLog(@"%@",city);
+//            NSLog(@"%@",city);
         }else if(error == nil && [array count] == 0){
-            NSLog(@"No results were returned");
+//            NSLog(@"No results were returned");
         }else if(error != nil) {
-            NSLog(@"An error occured = %@",error);
+//            NSLog(@"An error occured = %@",error);
         }
     }];
-    
-    //如果定位成功，就关闭定位
-//    if([txtLat intValue] > 0 && [txtLng intValue] > 0){
-//       [_locationManager stopUpdatingLocation];
-//    }
 }
 //定位失败
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    NSLog(@"定位失败,error: %@",error);
+//    NSLog(@"定位失败,error: %@",error);
     User *user = [[User alloc] init];
     NSString *username = [user getUserInfo:@"username"];
     NSString *lastLocateTime = [user getUserInfo:[NSString stringWithFormat:@"%@_locatetime",username]];
@@ -413,7 +348,7 @@
                          "</soap:Body>"
                          "</soap:Envelope>",methodName,fields,methodName];
     //将这个XML字符串打印出来
-    NSLog(@"%@",soapMsg);
+//    NSLog(@"%@",soapMsg);
     //创建URL，内容是前面的请求报文中第二行主机地址加上第一行URL字段
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%@/%@/%@/%@"
                                        ,self.webservice_id
@@ -421,7 +356,7 @@
                                        ,self.webservice_name
                                        ,self.webservice_subname
                                        ,serviceName]];
-    NSLog(@"创建请求");
+//    NSLog(@"创建请求");
     //根据上面的URL创建一个请求
     NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url];
     NSString *msgLength = [NSString stringWithFormat:@"%lu",(unsigned long)[soapMsg length]];
@@ -445,13 +380,13 @@
 
 //刚开始接受响应时调用
 -(void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *) response{
-    NSLog(@"刚开始接受响应");
+//    NSLog(@"刚开始接受响应");
     [webData setLength:0];
 }
 
 //每接受到一部分数据就追加到webData中
 -(void) connection:(NSURLConnection *)connection didReceiveData:(NSData *) data{
-    NSLog(@"追加数据");
+//    NSLog(@"追加数据");
     [webData appendData:data];
 }
 
@@ -459,7 +394,7 @@
 -(void) connection:(NSURLConnection *) connection didFailWithError:(NSError *)error{
     conn = nil;
     webData = nil;
-    NSLog(@"connection - error:%@",error);
+//    NSLog(@"connection - error:%@",error);
     NSString *result = @"";
     switch ([error code]) {
         case -1004://Could not connect to the server;
@@ -477,11 +412,11 @@
 
 //完成接受数据时调用
 -(void) connectionDidFinishLoading:(NSURLConnection *)connection{
-    NSLog(@"完成接受数据");
-    NSLog(@"webData length,%lu",(unsigned long)[webData length]);
+//    NSLog(@"完成接受数据");
+//    NSLog(@"webData length,%lu",(unsigned long)[webData length]);
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
     //打印出得到的XML
-    NSLog(@"返回值:%@",theXML);
+//    NSLog(@"返回值:%@",theXML);
     //如果需要调用的返回方法不为空，则开始拼接字符串
     /*if([theXML rangeOfString:@"</version>"].location != NSNotFound){
          NSRange range1 = [theXML rangeOfString:@"<version>"];
@@ -529,7 +464,7 @@
 
 //追加找到的元素值，一个元素值可能要分几次追加
 -(void)parser:(NSXMLParser *) parser foundCharacters:(NSString *)string{
-    [soapResults appendString:string];
+    [soapResults appendString:[string stringByReplacingOccurrencesOfString:@"\n" withString:@""]];
 }
 
 //结束解析这个元素名
@@ -551,7 +486,7 @@
     if(soapResults){
         soapResults = nil;
     }
-    NSLog(@"解析完毕");
+//    NSLog(@"解析完毕");
     if(![jsonResult isEqualToString:@""]){
         [jsonResult setString:[jsonResult substringToIndex:[jsonResult length] - 1]];
         [jsonResult appendString:@",{}"];
@@ -583,7 +518,7 @@
     }else{
         NSString *result = [[NSString alloc] initWithFormat:@"{\"result\":[%@}",jsonResult];
         [self callJs:result];
-        NSLog(@"解析XML结果:%@",result);
+//        NSLog(@"解析XML结果:%@",result);
     }
 }
 
@@ -637,7 +572,7 @@
     [self.webView stringByEvaluatingJavaScriptFromString:js_fit_code];
     
     NSString *requestString = [[request URL] absoluteString];//获取请求的绝对路径.
-    NSLog(@"requestString:%@",requestString);
+//    NSLog(@"requestString:%@",requestString);
     NSRange range = [[requestString uppercaseString] rangeOfString:@"IOS_DRIVER://"];
     self.resultMethod = @"resultList";//初始化返回调用js方法
     if(range.location != NSNotFound){
@@ -658,7 +593,7 @@
             //NSString *resultMethod = [components objectAtIndex:3];
             if([components count] == 4){
                 self.resultMethod = [components objectAtIndex:3];
-                NSLog(@"%@",self.resultMethod);
+//                NSLog(@"%@",self.resultMethod);
             }
             [self soap:serviceName methodName:methodName fields:fields];
             return NO;
@@ -680,7 +615,7 @@
     }else if([[requestString uppercaseString] rangeOfString:@"CALL://"].location != NSNotFound){
         //打电话
         range = [[requestString uppercaseString] rangeOfString:@"CALL://"];
-        NSLog(@"tel:%@",[[requestString substringFromIndex:range.location + range.length] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+//        NSLog(@"tel:%@",[[requestString substringFromIndex:range.location + range.length] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[NSString alloc] initWithFormat:@"tel://%@",[[requestString substringFromIndex:range.location + range.length] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]];
     }else if([[requestString uppercaseString] rangeOfString:@"CAMERA://"].location != NSNotFound){
         //相机
@@ -703,7 +638,7 @@
     }else if([[requestString uppercaseString] rangeOfString:@"USERINFO://"].location != NSNotFound){
         //获取用户信息
         User *user = [[User alloc] init];
-        NSLog(@"userInfo");
+//        NSLog(@"userInfo");
         range = [[requestString uppercaseString] rangeOfString:@"USERINFO://"];
         NSMutableString *result = [[NSMutableString alloc] init];
         [result appendString:@"{"];
@@ -737,7 +672,7 @@
             [result appendFormat:@"'%@':'%@'",name,[user getUserInfo:name]];
         }
         [result appendString:@"}"];
-        NSLog(@"userInfo:%@",result);
+//        NSLog(@"userInfo:%@",result);
         self.resultMethod = @"userInfoResult";
         [self callJs:[[NSString alloc] initWithFormat:@"{\"result\":%@}",result]];
         return NO;
@@ -765,7 +700,7 @@
         NSError *error;
         self.logInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
         if(error){
-            NSLog(@"error:%@",error);
+//            NSLog(@"error:%@",error);
         }
         if(self.logInfo != nil) {
             NSString *inputs = [[NSString alloc] initWithFormat:@"<%@>%@</%@><%@>%@</%@><%@>%@</%@>",@"username",[self.logInfo objectForKey:@"username"],@"username",@"password",[self.logInfo objectForKey:@"password"],@"password"
@@ -786,7 +721,7 @@
         //设置端口信息(有效期:软件关闭之前)
         range = [[requestString uppercaseString] rangeOfString:@"SETWEBSERVICE://"];
         NSString *iport = [requestString substringFromIndex:range.location+range.length];
-        NSLog(@"%@",iport);
+//        NSLog(@"%@",iport);
         if([iport rangeOfString:@"//"].location == NSNotFound){
             self.webservice_id = iport;
         }else{
@@ -810,7 +745,7 @@
         NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
         //app build版本
         //NSString *appBuild = [infoDictionary objectForKey:@"CFBundleVersion"];
-        //NSLog(@"version:%@,%@,%@,%@,%@",executableFile,version,appName,appVersion,appBuild);
+//        NSLog(@"version:%@,%@,%@,%@,%@",executableFile,version,appName,appVersion,appBuild);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"当前版本号" message:appVersion delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert dismissWithClickedButtonIndex:[alert cancelButtonIndex] animated:YES];
         [alert show];
@@ -822,7 +757,7 @@
         [user remove:@"password"];
         [user remove:@"rememberflag"];
         [self soap:@"LoginService" methodName:@"offLineStatus" fields:[NSString stringWithFormat:@"<user_id>%@</user_id>",user_id]];
-        NSLog(@"logout");
+//        NSLog(@"logout");
         return NO;
     }else if([[requestString uppercaseString] rangeOfString:@"GETWHETHER://"].location != NSNotFound){
         //返回天气信息  每天每个城市只会发送一次请求
@@ -834,8 +769,8 @@
         NSDateComponents *d = [calendar components:unitFlags fromDate:date];
         User *user = [[User alloc] init];
         NSString *httpArg = [requestString substringFromIndex:range.location+range.length];
-        NSLog(@"getWeatherTime:%@",[user getUserInfo:@"getWeatherTime"]);
-        NSLog(@"cityID:%@",[user getUserInfo:httpArg]);
+//        NSLog(@"getWeatherTime:%@",[user getUserInfo:@"getWeatherTime"]);
+//        NSLog(@"cityID:%@",[user getUserInfo:httpArg]);
         if([user getUserInfo:@"getWeatherTime"] != nil
            && [[user getUserInfo:@"getWeatherTime"] isEqualToString:[NSString stringWithFormat:@"%ld-%ld-%ld",(long)[d year],(long)[d month],(long)[d day]]]
            && [user getUserInfo:httpArg] != nil && ![@"" isEqualToString:[user getUserInfo:httpArg]]){
@@ -852,7 +787,7 @@
         //[request addValue:[APIKEY substringFromIndex:0] forHTTPHeaderField:@"apikey"];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,NSData *data,NSError *error){
             if(error){
-                NSLog(@"HttpError:%@%ld",error.localizedDescription,(long)error.code);
+//                NSLog(@"HttpError:%@%ld",error.localizedDescription,(long)error.code);
             }else{
                 NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 NSRange range1 = [responseString rangeOfString:@"\"daily_forecast\""];
@@ -860,7 +795,7 @@
                 NSString *daily_forecast = [responseString substringWithRange:NSMakeRange(range1.location, range2.location - range1.location)];
                 NSMutableArray *weatherResult2 = [[NSJSONSerialization JSONObjectWithData:[[[NSString alloc] initWithFormat:@"{%@}",daily_forecast] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error] objectForKey:@"daily_forecast"];
                 if(error){
-                    NSLog(@"weatherJson --> json error:%@",error);
+//                    NSLog(@"weatherJson --> json error:%@",error);
                 }else{
                     //开始遍历天气
                     [weatherJson appendString:@"{\"result\":["];
@@ -894,7 +829,7 @@
     }else if([[requestString uppercaseString] rangeOfString:@"BAIDUNAV://"].location != NSNotFound){
         range = [[requestString uppercaseString] rangeOfString:@"BAIDUNAV://"];
         NSString *latlngs = [requestString substringFromIndex:range.location+range.length];
-        NSLog(@"latlngs:%@",latlngs);
+//        NSLog(@"latlngs:%@",latlngs);
         NSArray *arr = [latlngs componentsSeparatedByString:@"//"];
         /*CLLocationCoordinate2D coords2 = CLLocationCoordinate2DMake([[arr objectAtIndex:3] floatValue],[[arr objectAtIndex:2] floatValue]);
         MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
@@ -911,7 +846,7 @@
         //}
         if(hasBaiduMap){
             NSString *urlString = [[NSString stringWithFormat:@"baidumap://map/direction?origin=latlng:%f,%f|name:我的位置&destination=latlng:%f,%f|name:终点&mode=driving",[[arr objectAtIndex:1] floatValue],[[arr objectAtIndex:0] floatValue],[[arr objectAtIndex:3] floatValue],[[arr objectAtIndex:2] floatValue]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            NSLog(@"urlString:%@",urlString);
+//            NSLog(@"urlString:%@",urlString);
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
         }else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"您的手机尚未安装百度地图，是否前往下载?" delegate:self cancelButtonTitle:@"取消导航" otherButtonTitles:@"下载",@"使用高德地图", nil];
@@ -948,7 +883,7 @@
     NSError *error;
     NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
     if(error){
-        NSLog(@"setUserInfo --> Json error:%@",error);
+//        NSLog(@"setUserInfo --> Json error:%@",error);
     }
     if([@"00" isEqualToString:[dictionary objectForKey:@"RESULT_FLAG"]]){
         RendaKeychain *keyChain = [[RendaKeychain alloc] init];
@@ -963,7 +898,7 @@
         [user setUserInfo:@"firstinstall" value:@"false"];
         [user setUserInfo:@"username" value:[self.logInfo objectForKey:@"username"]];
     }
-    NSLog(@"setUserInfo:%@",data);
+//    NSLog(@"setUserInfo:%@",data);
     [self callJs:data];
 }
 
@@ -1040,7 +975,7 @@
     NSURLConnection *mconn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     //设置接受response的data；
     NSMutableData *responseData = [[NSMutableData alloc] init];
-    NSLog(@"uploadImage:11");
+//    NSLog(@"uploadImage:11");
     if(mconn){
         responseData = [NSMutableData data];
     }
@@ -1048,13 +983,13 @@
 
 //调用网页JS
 - (void) callJs:(NSString *)result{
-    NSLog(@"jsonResult:%@,method:%@",result,self.resultMethod);
+//    NSLog(@"jsonResult:%@,method:%@",result,self.resultMethod);
     [self.webView stringByEvaluatingJavaScriptFromString:[[NSString alloc] initWithFormat:@"%@(%@)",self.resultMethod,result]];
 }
 
 //点击相册中的图片或者照相机照完后点击use动作时调用
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    NSLog(@"选择完毕");
+//    NSLog(@"选择完毕");
     if([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:@"public.image"]){
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         UIImage *newImage = nil;
@@ -1086,7 +1021,7 @@
         [image drawInRect:thumbnailRect];
         newImage = UIGraphicsGetImageFromCurrentImageContext();
         if(newImage == nil){
-            NSLog(@"cound not scale image");
+//            NSLog(@"cound not scale image");
         }
         UIGraphicsEndImageContext();
         
@@ -1113,7 +1048,7 @@
         //关闭相册界面
         [imageData setObject:data forKey:self.imageIndex];
         [imageName setObject:fileName forKey:self.imageIndex];
-        NSLog(@"{'result':'%@'}",imagePath);
+//        NSLog(@"{'result':'%@'}",imagePath);
         [self callJs:[[NSString alloc] initWithFormat:@"{'result':'%@'}",imagePath]];
         [picker dismissViewControllerAnimated:YES completion:nil];
     }

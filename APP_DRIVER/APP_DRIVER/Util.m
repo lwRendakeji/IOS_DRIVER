@@ -68,9 +68,12 @@
     NSString *filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
                           stringByAppendingPathComponent:fileName];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSLog(@"filePath:%@",filePath);
+//    NSLog(@"filePath:%@",filePath);
     if(![fileManager fileExistsAtPath:filePath]) return nil;
     return [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+}
++(float) getVersion{
+    return [[[UIDevice currentDevice] systemVersion] floatValue];
 }
 /*-(void) uploadImage:(NSString *)url user_id:(NSString *)user_id index:(NSString *)index trs_id:(NSString *)trs_id role_id:(NSString *)role_id delegate:(nullable id)delegate imageData:(NSMutableDictionary *)imageData imageName:(NSMutableDictionary *)imageName{
     if([imageData count] == 0) return;
