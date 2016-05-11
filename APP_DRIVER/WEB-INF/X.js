@@ -617,40 +617,6 @@ putDataIntoDiv:function(){
     //添加 数据装载
     if($('.'+cls).length <= 0){
       $('body').append('<div class="'+cls+'"></div>');
-       /* if(ROWNUMBER.length>0){
-          if(X.cookie.get('iphoneversion')==6){
-            $('.'+cls).css({'overflow':'scroll','height':'600px'});
-          }
-          if(X.cookie.get('iphoneversion')==4){
-            $('.'+cls).css({'overflow':'scroll','height':'500px'});
-          }
-          if(X.cookie.get('iphoneversion')=='ipad'){
-            $('.'+cls).css({'overflow':'scroll','height':'900px'});
-          }
-          $('.'+cls).scroll(function() {
-            var $this =$(this),
-            viewH =$(this).height(),//可见高度
-            contentH =$(this).get(0).scrollHeight,//内容高度
-            scrollTop =$(this).scrollTop();//滚动高度
-            if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
-                           
-              if(!flag){
-                 X.html.setOverlay();
-                 if($('#NoData').length > 0){ $('#NoData').remove();    }
-                 $('.'+cls).append('<div id="NoData" class="NoData" >数据加载中...</div>');
-                 setTimeout(function(){
-                   getToData();
-                  $('#NoData').remove();
-                  flag=false;
-                 }, 2000);
-                flag=true;
-                return ;
-              }
-                            
-             }
-          });//滚动事件结束
-        }//判断是否有分页
-        */
     }
     //判断是否出现连接错误
     if(!X.isEmpty(result.success) && 'false' == result.success){
@@ -676,22 +642,9 @@ putDataIntoDiv:function(){
 	}
     //判断result是否为空
     if(result.length == 0){
-//        alert(1);
      $('.'+cls).append('<div class="divTable" style="text-align:center">未找到任何数据</div>');
      $('.overlayX').css('display','none');
-        
-//     if(ROWNUMBER.length>0){
-//         //LW 新添加的  用于分页 当没有数据的时候添加 提示
-//         flag=true;//判断返回结果
-//         if ($('#NoData').length <= 0) {
-//          $('body').append('<div id="NoData" class="NoData" >未找到更多的数据</div>');
-//          }
-//          setTimeout(function(){
-//                     $('#NoData').remove();
-//                     }, 5000);
-//     }else{
-      
-//     }
+
       return false;
     }
     //查找模板Div,以便填充数据
