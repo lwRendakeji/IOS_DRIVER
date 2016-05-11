@@ -30,7 +30,7 @@ $(function(){
         if(result.length>0){
             for(var x in result){
                 if(!X.getObjLenOrCompare(result[x],0)) continue;
-                $('.table').append('<tr><td><img src="arrow_next.png"/></td><td class="NOTICE_DATE"></td><td class="NOTICE_TITLE"></td></tr>');
+                $('.table').append('<tr height="40"><td><img src="arrow_next.png"/></td><td class="NOTICE_DATE"></td><td class="NOTICE_TITLE"></td></tr>');
                 $('.NOTICE_DATE:last').text(result[x].NOTICE_DATE);
                 $('.NOTICE_TITLE:last').text(result[x].NOTICE_TITLE);
             }
@@ -115,7 +115,7 @@ $(function(){
 $('.notice').css({"overflow":"scroll"});
 
 if(X.cookie.get('iphoneversion')==6){
-    $('.notice').css({"height":"460px","width":"100%"});
+    $('.notice').css({"height":"400px","width":"100%"});
 };
 if(X.cookie.get('iphoneversion')==4){
     $('notice').css({"height":"360px","width":"100%"});
@@ -149,9 +149,10 @@ $('.notice').scroll(function() {
 function clickDetails_1(){
     if($('.detailBody').length > 0){
         $('.detailBody').remove();
-        ROWNUMBER="0";
-        flag=false;
     }
+    $('.table tbody').empty();
+    ROWNUMBER="0";
+    flag=false;
 	<!--通知资讯-->
 	$("#tongzi").css("border-bottom","solid 1px #F00");
 	$("#fukuan").css("border-bottom","nonl");
@@ -164,9 +165,11 @@ function clickDetails_1(){
 function clickDetails_2(){
     if($('.detailBody').length > 0){
         $('.detailBody').remove();
-        ROWNUMBER="0";
-        flag=false;
     }
+    ROWNUMBER="0";
+    flag=false;
+    $('.table tbody').empty();
+    
 	<!--付款消息-->
 	$("#tongzi").css("border-bottom","nonl");
 	$("#fukuan").css("border-bottom","solid 1px #F00");
