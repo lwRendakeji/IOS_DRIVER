@@ -187,13 +187,13 @@
 //监听home键,app进去后台   xwb 2016-05-09
 -(void) applicationWillResignActive:(NSNotification *)notification{
     self.isBackground = true;
-    printf("background");
+//    printf("background");
 }
 //监听app返回前台 xwb 2016-05-09      当程序开始运行的时候,也会调用该方法
 -(void) applicationDidBecomeActive:(NSNotification *)notification{
     self.isBackground = false;
     [self getLocation:false];       //非强制定位
-    printf("BecomeActive");
+//    printf("BecomeActive");
 }
 
 -(void) getLocation:(BOOL) isLocate{

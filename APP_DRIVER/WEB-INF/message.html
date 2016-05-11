@@ -9,12 +9,18 @@
 <script type="text/javascript" src="jquery-2.1.0.js"></script>
 <script type="text/javascript" src="X.js"></script>
 <script>
-    var _result;
-    $(function(){
-      clickDetails_1();
-      });
-    function noticeResult(jsonResult){
-        $('.table').empty();
+    var result;
+    var ROWNUMBER = "0";//分页
+    var num="10";//每次加载多少条数据
+    var flag=false;//判断返回数据是否为空
+    var select =false;//查询 false＝付款消息 true＝其他消息
+    
+$(function(){
+   clickDetails_1();
+  
+  });
+  function noticeResult(jsonResult){
+        //$('.table').empty();
         result = jsonResult.result;
         if(!X.isEmpty(result.success) && 'false' == result.success){
             $('.table').append('<tr><td colspan="3">'+result.msg+'</td></tr>');
