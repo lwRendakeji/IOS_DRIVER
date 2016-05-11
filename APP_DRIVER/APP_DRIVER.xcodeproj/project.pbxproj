@@ -270,6 +270,7 @@
 		52F67AF31C3A16A00032EFDF /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F67AF21C3A16A00032EFDF /* libstdc++.6.0.9.tbd */; };
 		52F67AF51C3A16AA0032EFDF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F67AF41C3A16AA0032EFDF /* SystemConfiguration.framework */; };
 		52F67B1E1C3A556C0032EFDF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52F67B1D1C3A556C0032EFDF /* MapKit.framework */; };
+		52F973051CE1DC500022350B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F973041CE1DC500022350B /* Reachability.m */; };
 		52FE95F11C30C7FD00E84235 /* tel_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FE95F01C30C7FD00E84235 /* tel_1.png */; };
 		8E0133BF1CDDB257004B509B /* city-data.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E0133BE1CDDB257004B509B /* city-data.js */; };
 		8E0133C11CDDB26A004B509B /* hzw-city-picker.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 8E0133C01CDDB26A004B509B /* hzw-city-picker.min.js */; };
@@ -558,6 +559,8 @@
 		52F67AF61C3A16B40032EFDF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		52F67B001C3A18500032EFDF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		52F67B1D1C3A556C0032EFDF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		52F973031CE1DC440022350B /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		52F973041CE1DC500022350B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		52FE95F01C30C7FD00E84235 /* tel_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tel_1.png; path = "WEB-INF/tel_1.png"; sourceTree = "<group>"; };
 		8E0133BE1CDDB257004B509B /* city-data.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "city-data.js"; path = "WEB-INF/city-data.js"; sourceTree = "<group>"; };
 		8E0133C01CDDB26A004B509B /* hzw-city-picker.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "hzw-city-picker.min.js"; path = "WEB-INF/hzw-city-picker.min.js"; sourceTree = "<group>"; };
@@ -629,6 +632,8 @@
 		52A2E8411C17C3AC0056F305 /* APP_DRIVER */ = {
 			isa = PBXGroup;
 			children = (
+				52F973041CE1DC500022350B /* Reachability.m */,
+				52F973031CE1DC440022350B /* Reachability.h */,
 				52EB1B2C1C22ADF500EA9053 /* Util.h */,
 				52EB1B2D1C22ADF500EA9053 /* Util.m */,
 				52A2EA091C17C7A10056F305 /* RendaKeychain.h */,
@@ -1277,6 +1282,7 @@
 				52A2E8481C17C3AC0056F305 /* main.m in Sources */,
 				52A2E84C1C17C3AC0056F305 /* GUOLIAppDelegate.m in Sources */,
 				52A2E8551C17C3AC0056F305 /* GUOLIViewController.m in Sources */,
+				52F973051CE1DC500022350B /* Reachability.m in Sources */,
 				52A2EA081C17C7620056F305 /* User.mm in Sources */,
 				52A2EA0B1C17C7A10056F305 /* RendaKeychain.m in Sources */,
 				52EB1B2E1C22ADF500EA9053 /* Util.m in Sources */,
