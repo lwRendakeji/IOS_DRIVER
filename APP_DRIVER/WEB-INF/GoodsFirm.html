@@ -255,7 +255,7 @@ function fuwu() {
 		</div>
         <div class="vehicle_home">
             <a href="javascript:void(0);">
-                <span id="dianji_CityList">城市</span>
+                <div id="dianji_CityList">城市</div>
                 <span> <img src="city_qry.png"/> </span>
             </a>
         </div>
@@ -382,14 +382,13 @@ function fuwu() {
                 function dd(){
                     $('.overlayCity').css('display','none');
                     $('.main_service_bottom').css('position','fixed');
-                    $('input[id="cityChoice"]').blur();
-                
+                    if($('#hzw_city_picker').length > 0) $('#hzw_city_picker').remove();
+                    //$('input[id="cityChoice"]').blur();
                 }
                 
                 </script>
                 
                 </div>
    
-	</div>
 </body>
 </html>

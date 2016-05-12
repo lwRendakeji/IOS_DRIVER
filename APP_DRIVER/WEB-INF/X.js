@@ -163,9 +163,15 @@ baidunav:function(v1,v2,v3,v4){
 getWhether:function(cityName){
     if(X.isEmpty(cityName)){
         X.dialog('城市名称无效，无法获取天气信息');
+        X.html.removeOverlay();
         return;
     }
     if(cityName.substr(-1,1) == '市') cityName = cityName.substring(0,cityName.length-1);
+    if(X.isEmpty(hecityid[cityName])){
+        X.dialog('无法获取该城市的有效天气信息');
+        X.html.removeOverlay();
+        return;
+    }
 	var url = 'GETWHETHER://'+encodeURIComponent(hecityid[cityName]);
 	window.location = url;
 },
