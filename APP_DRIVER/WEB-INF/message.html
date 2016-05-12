@@ -115,10 +115,11 @@ $(function(){
 $('.notice').css({"overflow":"scroll"});
 
 if(X.cookie.get('iphoneversion')==6){
-    $('.notice').css({"height":"460px","width":"100%"});
-    //$('body').css({"height":"460px"});
-}
+    $('body').css('height','400px');
+  $('.notice').css({"height":"460px","width":"100%"});
+};
 if(X.cookie.get('iphoneversion')==4){
+    $('body').css('height','300px');
     $('.notice').css({"height":"360px","width":"100%"});
 }
 if(X.cookie.get('iphoneversion')=='ipad'){ //ipad
