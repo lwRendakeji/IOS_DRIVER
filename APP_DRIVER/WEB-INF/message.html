@@ -115,12 +115,15 @@ $(function(){
 $('.notice').css({"overflow":"scroll"});
 
 if(X.cookie.get('iphoneversion')==6){
-    $('.notice').css({"height":"400px","width":"100%"});
+    $('body').css('height','400px');
+  $('.notice').css({"height":"460px","width":"100%"});
 };
 if(X.cookie.get('iphoneversion')==4){
-    $('notice').css({"height":"360px","width":"100%"});
+    $('body').css('height','300px');
+    $('.notice').css({"height":"360px","width":"100%"});
 }
 if(X.cookie.get('iphoneversion')=='ipad'){ //ipad
+    $('body').css('height','1000px');
     $('.notice').css({"height":"1000px","width":"100%"});
     
 }
@@ -158,7 +161,7 @@ function clickDetails_1(){
 	$("#fukuan").css("border-bottom","nonl");
 	$("#qita").css("border-bottom","nonl");
     $('.notice').attr('hidden',false);
-    $('.detailBodyModel').attr('hidden',true);
+    //$('.detailBodyModel').attr('hidden',true);
     $('.detailBody').attr('hidden',true);
     getNotice();
 	}
@@ -169,13 +172,12 @@ function clickDetails_2(){
     ROWNUMBER="0";
     flag=false;
     $('.table tbody').empty();
-    
 	<!--付款消息-->
 	$("#tongzi").css("border-bottom","nonl");
 	$("#fukuan").css("border-bottom","solid 1px #F00");
 	$("#qita").css("border-bottom","nonl");
     $('.notice').attr('hidden',true);
-    $('.detailBodyModel').attr('hidden',false);
+    //$('.detailBodyModel').attr('hidden',false);
     $('.detailBody').attr('hidden',false);
     select =false;
     getPay('PAY');
@@ -183,9 +185,11 @@ function clickDetails_2(){
 function clickDetails_3(){
     if($('.detailBody').length > 0){
         $('.detailBody').remove();
-        ROWNUMBER="0";
-        flag=false;
+        
     }
+    ROWNUMBER="0";
+    flag=false;
+    $('.table tbody').empty();
 	<!--其它消息-->
 	$("#tongzi").css("border-bottom","nonl");
 	$("#fukuan").css("border-bottom","nonl");
