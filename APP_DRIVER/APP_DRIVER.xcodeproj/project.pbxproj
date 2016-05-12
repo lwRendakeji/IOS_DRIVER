@@ -729,7 +729,6 @@
 				525D11781C22885900837254 /* jquery.autocomplete.js */,
 				525D11791C22885900837254 /* jquery.event.drag-1.5.min.js */,
 				8E0133C21CDDB27C004B509B /* jquery-2.1.3.min.js */,
-				525D11A41C22885900837254 /* NetList.html */,
 				525D117D1C22885900837254 /* jquery.touchSlider.js */,
 				525D11C91C22885900837254 /* PublishingreSources.js */,
 				525D12161C22885900837254 /* X.js */,
