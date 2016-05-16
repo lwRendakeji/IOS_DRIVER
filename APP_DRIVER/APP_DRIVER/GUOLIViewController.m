@@ -100,9 +100,7 @@
             [user setUserInfo:@"iphoneversion" value:@"ipad"];
             iphoneVersion = @"ipad";
         }
-        
-        [user setUserInfo:@"iphoneversion" value:@"6"];//模拟器测试
-        
+    
         self.callMethod = @"getMainPic";
         [self soap:@"ExecSqlService" methodName:@"getPicDir" fields:@"<func_mode>FUNC01</func_mode>"];
         
