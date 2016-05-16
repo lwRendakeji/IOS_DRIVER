@@ -120,7 +120,7 @@ function resultList(jsonResult) {
             };
             if(X.cookie.get('iphoneversion')==4){
                 $('body').css('height','310px');
-                $(".div_overflow").css("height","310px");
+                $(".div_overflow").css("height","355px");
             }
             if(X.cookie.get('iphoneversion')=='ipad'){ //ipad
                 $("div.main_service_bottom").css({"bottom":"0px","position":"fixed"});
@@ -373,7 +373,7 @@ function fuwu() {
                  ROWNUMBER="0";
                  getGoods2(ROWNUMBER);
                 }else{
-                    alert('请输入城市名称');
+                    X.dialog('请输入城市名称');
                 }
                 
                 }

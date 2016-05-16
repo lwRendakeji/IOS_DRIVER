@@ -1394,7 +1394,7 @@
 					"-W",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = driverApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.guoli.driverApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1425,7 +1425,7 @@
 					"-W",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = driverApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.guoli.driverApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
