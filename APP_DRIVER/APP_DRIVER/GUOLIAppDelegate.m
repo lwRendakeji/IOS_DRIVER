@@ -14,9 +14,42 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    //后台运行 UIApplicationBackgroundFetchIntervalMinimum=意思是尽可能频繁的调用我们的Fetch方法。
-//    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-    
+    UIAlertView * alert;    
+    //We have to make sure that the Background App Refresh is enable for the Location updates to work in the background.
+    if([[UIApplication sharedApplication] backgroundRefreshStatus] == UIBackgroundRefreshStatusDenied){
+        
+        alert = [[UIAlertView alloc]initWithTitle:@""
+                                          message:@"The app doesn't work without the Background App Refresh enabled. To turn it on, go to Settings > General > Background App Refresh"
+                                         delegate:nil
+                                cancelButtonTitle:@"Ok"
+                                otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }else if([[UIApplication sharedApplication] backgroundRefreshStatus] == UIBackgroundRefreshStatusRestricted){
+        
+        alert = [[UIAlertView alloc]initWithTitle:@""
+                                          message:@"The functions of this app are limited because the Background App Refresh is disable."
+                                         delegate:nil
+                                cancelButtonTitle:@"Ok"
+                                otherButtonTitles:nil, nil];
+        [alert show];
+        
+    } else{
+        
+        self.locationTracker = [[LocationTracker alloc]init];
+        [self.locationTracker startLocationTracking];
+        
+        /*每60秒发送一个最佳位置服务器
+         您可以调整的时间间隔取决于您的应用程序的需要。*/
+        NSTimeInterval time = 1800.0;//30分钟 
+        self.locationUpdateTimer =
+        [NSTimer scheduledTimerWithTimeInterval:time
+                                         target:self
+                                       selector:@selector(updateLocation)
+                                       userInfo:nil
+                                        repeats:YES];
+    }
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[GUOLIViewController alloc] initWithNibName:@"GUOLIViewController" bundle:nil];
@@ -25,8 +58,14 @@
     return YES;
 }
 
-//增加实现Fetch方法
-//- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{};
+//LW
+-(void)updateLocation {
+    NSLog(@"开始获取定位信息...");
+    //向服务器发送位置信息
+    [self.locationTracker updateLocationToServer];
+}//LW
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

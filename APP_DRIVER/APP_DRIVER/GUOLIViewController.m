@@ -56,13 +56,23 @@
 
 -(CLLocationManager *)locationManager
 {
-        if (_locationManager==nil) {
-                 //1.创建位置管理器（定位用户的位置）
-                self.locationManager=[[CLLocationManager alloc]init];
-                //2.设置代理
-                self.locationManager.delegate=self;
-            }
-         return _locationManager;
+    if(_locationManager == nil){//如果为nil 实例化
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;//代理
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//最适合导航 0m 点进去有个三千米的
+        _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
+        _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8) {
+            //[_locationManager requestWhenInUseAuthorization];//?只在前台开启定位
+            [_locationManager requestAlwaysAuthorization];//?在后台也可定位
+        }
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9) {
+            _locationManager.allowsBackgroundLocationUpdates = YES;
+        }
+        
+    }
+    return _locationManager;
 }
 
 - (void)viewDidLoad
@@ -167,15 +177,30 @@
     [self.webView loadHTMLString:htmlCont baseURL:baseURL];
     //[webView loadRequest:request];
     
-    //定位代码
-    if(_locationManager == nil) _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;//代理
-    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//定位精确度
-    //_locationManager.distanceFilter = 5000.0f;//每隔1000米 更新一次信息
     
-    _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
-    _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
-    if([Util getVersion] >= 8.0) [_locationManager requestWhenInUseAuthorization];   //ios8.0之后，需要主动申请定位授权   xwb 2016-05-09
+    
+    //判断 定位是否打开(LW)
+    if ([CLLocationManager locationServicesEnabled]) {
+        [self.locationManager startUpdatingLocation];//开启定位
+    }
+ /*   //定位代码  LW  2016-05-16
+    if(_locationManager == nil){//如果为nil 实例化
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;//代理
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;//最适合导航 0m 点进去有个三千米的
+        _locationManager.distanceFilter=kCLDistanceFilterNone;//实时更新定位位置
+        _locationManager.pausesLocationUpdatesAutomatically=NO;//该模式是抵抗程序在后台被杀，申明不能够被暂停
+  
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8) {
+            //[_locationManager requestWhenInUseAuthorization];//?只在前台开启定位
+            [_locationManager requestAlwaysAuthorization];//?在后台也可定位
+        }
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9) {
+            _locationManager.allowsBackgroundLocationUpdates = YES;
+        }
+        
+         [_locationManager startUpdatingLocation];
+   } */
     
     //注册app进入后台和进入前台的事件 xwb 2016-05-09
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
@@ -237,7 +262,7 @@
 //定位成功
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
 
-    [_locationManager stopUpdatingLocation];
+    [_locationManager stopUpdatingLocation];//成功之后就关闭
 //    NSLog(@"定位成功");
     CLLocation *currLocation = [locations lastObject];
     txtLat = [NSString stringWithFormat:@"%3.16f",currLocation.coordinate.latitude];
@@ -253,19 +278,22 @@
     [geocoder reverseGeocodeLocation:currLocation completionHandler:^(NSArray *array,NSError *error) {
         if(array.count > 0){
             placemark = [array objectAtIndex:0];
-//            NSLog(@"%@",placemark.name);
+            NSLog(@"%@",placemark.name);
 //            NSDictionary *location = [placemark addressDictionary];
 //            NSLog(@"国家: %@",[location objectForKey:@"Country"]);
-//             NSLog(@"城市: %@",[location objectForKey:@"State"]);
-//             NSLog(@"区: %@",[location objectForKey:@"SubLocality"]);
-//             NSLog(@"位置: %@",placemark.name);
-//             NSLog(@"国家: %@",placemark.country);
-//             NSLog(@"城市: %@",placemark.locality);
-//             NSLog(@"区: %@",placemark.subLocality);
-//             NSLog(@"街道: %@",placemark.thoroughfare);
-//             NSLog(@"子街道: %@",placemark.subThoroughfare);
+//            NSLog(@"城市: %@",[location objectForKey:@"State"]);
+//            NSLog(@"区: %@",[location objectForKey:@"SubLocality"]);
+//            NSLog(@"位置: %@",placemark.name);
+//            NSLog(@"国家: %@",placemark.country);
+//            NSLog(@"城市: %@",placemark.locality);
+//            NSLog(@"区: %@",placemark.subLocality);
+//            NSLog(@"街道: %@",placemark.thoroughfare);
+//            NSLog(@"子街道: %@",placemark.subThoroughfare);
             //获取城市
             NSString *city = placemark.locality;
+            
+           // NSLog(@"LW_____城市: %@,位置: %@",[location objectForKey:@"State"],placemark.name);
+            
             if(!city){
                 //四大直辖市的城市信息无法通过locality获得，只能通过获取省份的方法来获得(如果city为空，则可知为直辖市)
                 city = placemark.administrativeArea;
@@ -346,7 +374,7 @@
                          "</soap:Body>"
                          "</soap:Envelope>",methodName,fields,methodName];
     //将这个XML字符串打印出来
-//    NSLog(@"%@",soapMsg);
+ 
     //创建URL，内容是前面的请求报文中第二行主机地址加上第一行URL字段
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:%@/%@/%@/%@"
                                        ,self.webservice_id
@@ -374,6 +402,7 @@
     if(conn){
         webData = [NSMutableData data];
     }
+     //NSLog(@"LW___________________%@,%@",soapMsg,[self webservice_id]);
 }
 
 //刚开始接受响应时调用
@@ -1059,6 +1088,8 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
+
 
 //将原始图片的URL转化为NSData数据，写入沙盒
 /*-(void)imageWithUrl:(NSURL *)url withFileName:(NSString *)fileName{

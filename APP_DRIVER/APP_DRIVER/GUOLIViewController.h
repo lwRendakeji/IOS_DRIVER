@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <CoreLocation/CLLocationManagerDelegate.h>
 #import <MapKit/MapKit.h>
+
 //#import <BaiduMapAPI_Map/BMKMapComponent.h>
 //#import <BaiduMapAPI_Location/BMKLocationComponent.h>
 
@@ -39,6 +40,9 @@ UIImagePickerControllerDelegate,UINavigationControllerDelegate
 @property (strong,nonatomic) NSString *txtAlt;
 @property (nonatomic,strong) CLLocationManager *locationManager;
 
+
 - (void)soap:(NSString *)serviceName methodName:(NSString *)methodName fields:(NSString *)fields;
+
+
 
 @end

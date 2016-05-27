@@ -9,9 +9,10 @@
 #ifndef APP_DRIVER_StaticRef_h
 #define APP_DRIVER_StaticRef_h
 
-//static const NSString *WEBSERVICE_ID = @"app.ahglwl.com";             //正式服务器地址
-static const NSString *WEBSERVICE_ID = @"192.168.1.104";        //服务器地址
-static const NSString *WEBSERVICE_NAME = @"AndroidServiceDriver";   //服务器应用名称
+static const NSString *WEBSERVICE_ID = @"app.ahglwl.com";             //正式服务器地址
+//static const NSString *WEBSERVICE_ID = @"192.168.1.104";        //服务器地址
+static const NSString *WEBSERVICE_NAME = @"AndroidServiceDriverTest";   //服务器应用名称
+//static const NSString *WEBSERVICE_NAME = @"AndroidServiceDriver";   //服务器应用名称
 static const NSString *WEBSERVICE_PORT = @"8083";               //服务器端口
 
 static const NSString *WEBSERVICE_SUBNAME = @"services";        //servlet地址

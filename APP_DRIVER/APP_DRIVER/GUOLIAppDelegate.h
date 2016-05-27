@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LocationTracker.h"//LW
 
 @class GUOLIViewController;
 
@@ -15,5 +16,11 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) GUOLIViewController *viewController;
+
+
+@property LocationTracker * locationTracker;//LW
+@property (nonatomic) NSTimer* locationUpdateTimer;//LW
+//- (void)setUpLocationTraker;//LW
+//- (void)updateLocation;//LW
 
 @end
